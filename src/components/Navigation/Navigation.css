@@ -1,0 +1,22 @@
+.Nav {
+  background: linear-gradient(to bottom, rgba(0,0,0,0.4), rgba(0,0,0,0));
+  color: rgba(255,255,255,0.8);
+  flex-direction: row;
+  opacity: 0.6;
+  padding: 1rem 1rem 2rem;
+  position: absolute;
+  right: 0;
+  transition: opacity 0.2s ease-out;
+}
+
+.Nav:hover {
+  opacity: 1;
+}
+
+.Nav button:hover {
+  color: rgba(255,255,255,1);
+}
+
+.Nav__right {
+  margin-left: auto;
+}

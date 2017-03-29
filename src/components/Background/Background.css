@@ -1,0 +1,49 @@
+.Background {
+  background: black;
+  height: 100%;
+  width: 100%;
+}
+
+.Background__container,
+.Background__image {
+  height: 100%;
+  position: absolute;
+  width: 100%;
+}
+
+.Background__image.Background__image-enter {
+  opacity: 0;
+  z-index: 10;
+}
+
+.Background__image.Background__image-enter-active {
+  opacity: 1;
+  transition: 0.3s ease-out;
+}
+
+.Background__image.Background__image-leave {
+  opacity: 1;
+  z-index: 1;
+}
+
+.Background__image.Background__image-leave-active {
+  opacity: 0;
+  transition: 0.3s ease-out;
+}
+
+.Background__content {
+  z-index: 20;
+}
+
+.Background__refresh {
+  color: rgba(255,255,255,0.8);
+  left: 1rem;
+  position: absolute;
+  top: auto;
+  bottom: 1rem;
+  z-index: 10;
+}
+
+.Background__refresh:hover {
+  color: rgba(255,255,255,1);
+}
