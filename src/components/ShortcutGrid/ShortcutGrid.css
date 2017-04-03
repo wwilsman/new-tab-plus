@@ -1,0 +1,15 @@
+.ShortcutGrid {
+  align-items: flex-start;
+  flex-direction: row;
+  flex-wrap: wrap;
+  left: 50%;
+  position: fixed;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.ShortcutGrid__item {
+  font-size: 0.625rem;
+  margin: 0.5rem;
+  width: 5rem;
+}

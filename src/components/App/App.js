@@ -10,6 +10,7 @@ import configureStore from '../../store';
 import UnsplashWallpaper from '../UnsplashWallpaper';
 import Navigation from '../Navigation';
 import Settings from '../Settings';
+import ShortcutGrid from '../ShortcutGrid';
 
 class App extends Component {
   history = createHistory();
@@ -21,6 +22,7 @@ class App extends Component {
         <ConnectedRouter history={this.history}>
           <UnsplashWallpaper>
             <Navigation/>
+            <ShortcutGrid/>
             <Route path="/settings" component={Settings}/>
           </UnsplashWallpaper>
         </ConnectedRouter>
