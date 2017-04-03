@@ -23,8 +23,8 @@ const photosReducer = (state = [], action) => {
       return state;
 
     case 'CACHE_PHOTO':
-      if (!stateHasPhoto(state, action.data.id)) {
-        return [action.data, ...state].slice(0, 51);
+      if (!stateHasPhoto(state, action.photo.id)) {
+        return [action.photo, ...state].slice(0, 51);
       }
 
       return state;

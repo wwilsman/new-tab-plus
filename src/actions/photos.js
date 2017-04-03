@@ -1,3 +1,3 @@
-export const cachePhoto = (data) => {
-  return { type: 'CACHE_PHOTO', data }
+export const cachePhoto = (photo) => {
+  return { type: 'CACHE_PHOTO', photo }
 }
