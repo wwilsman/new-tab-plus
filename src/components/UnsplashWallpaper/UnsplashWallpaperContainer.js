@@ -1,9 +1,9 @@
 import { connect } from 'react-redux';
 import { cachePhoto } from '../../actions/photos';
 
-import Background from './Background';
+import UnsplashWallpaper from './UnsplashWallpaper';
 
-const BackgroundContainer = connect(
+const UnsplashWallpaperContainer = connect(
   (state) => ({
     cache: state.photos
   }), {
@@ -11,6 +11,6 @@ const BackgroundContainer = connect(
   }, null, {
     pure: false
   }
-)(Background);
+)(UnsplashWallpaper);
 
-export default BackgroundContainer;
+export default UnsplashWallpaperContainer;

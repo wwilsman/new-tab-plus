@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import Unsplash from 'unsplash-js';
-import './Background.css';
+import './UnsplashWallpaper.css';
 
 import Icon from '../Icon';
 import UnsplashPhoto from '../UnsplashPhoto';
@@ -12,7 +12,7 @@ const unsplash = new Unsplash({
   callbackUrl: process.env.REACT_APP_UNSPLASH_CALLBACK
 });
 
-class Background extends Component {
+class UnsplashWallpaper extends Component {
   static propTypes = {
     cache: PropTypes.array.isRequired,
     cachePhoto: PropTypes.func.isRequired,
@@ -91,23 +91,27 @@ class Background extends Component {
     const { image, isLoading } = this.state;
 
     return (
-      <div className="Background">
+      <div className="Wallpaper">
         <ReactCSSTransitionGroup
-            className="Background__container"
-            transitionName="Background__image"
+            className="Wallpaper__container"
+            transitionName="Wallpaper__image"
             transitionEnterTimeout={300}
             transitionLeaveTimeout={300}>
           {!!image && (
-             <UnsplashPhoto key={image.id} className="Background__image" {...image}/>
+             <UnsplashPhoto
+                 key={image.id}
+                 className="Wallpaper__image"
+                 {...image}
+             />
            )}
         </ReactCSSTransitionGroup>
 
-        <div className="Background__content">
+        <div className="Wallpaper__content">
           {children}
         </div>
 
         <button
-            className="Background__refresh"
+            className="Wallpaper__refresh"
             onClick={this._handleRefresh}
             disabled={isLoading}>
           <Icon name="refresh" fixed spin={isLoading}/>
@@ -117,4 +121,4 @@ class Background extends Component {
   }
 }
 
-export default Background;
+export default UnsplashWallpaper;

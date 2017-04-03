@@ -7,7 +7,7 @@ import './App.css';
 import createHistory from 'history/createMemoryHistory';
 import configureStore from '../../store';
 
-import Background from '../Background';
+import UnsplashWallpaper from '../UnsplashWallpaper';
 import Navigation from '../Navigation';
 import Settings from '../Settings';
 
@@ -19,10 +19,10 @@ class App extends Component {
     return (
       <Provider store={this.store}>
         <ConnectedRouter history={this.history}>
-          <Background>
+          <UnsplashWallpaper>
             <Navigation/>
             <Route path="/settings" component={Settings}/>
-          </Background>
+          </UnsplashWallpaper>
         </ConnectedRouter>
       </Provider>
     );
