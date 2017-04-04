@@ -55,6 +55,12 @@ class Settings extends Component {
       children
     } = this.props;
 
+    const baseClassName = [
+      'Settings',
+      !!show && 'Settings--is-shown',
+      className
+    ].filter(Boolean).join(' ');
+
     const modalClassName = [
       'Settings__modal',
       `Settings__modal--position-${modalPosition}`,
@@ -62,7 +68,7 @@ class Settings extends Component {
     ].join(' ');
 
     return (
-      <div className={['Settings', className].join(' ')}>
+      <div className={baseClassName}>
         <button className="Settings__toggle" onClick={this.toggle}>
           <Icon name="cog" fixed/>
         </button>

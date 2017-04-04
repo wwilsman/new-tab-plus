@@ -1,10 +1,16 @@
-.Settings__toggle {
-  color: rgba(255,255,255,0.5);
-  text-shadow: 0 0 0.25em rgba(0,0,0,0.5);
+.Settings.Settings--is-shown {
+  display: block;
 }
 
-.Settings:hover .Settings__toggle {
-  color: rgba(255,255,255,1)
+.Settings__toggle {
+  color: white;
+  text-shadow: 0 0 0.25em rgba(0,0,0,0.5);
+  opacity: 0.5;
+}
+
+.Settings:hover .Settings__toggle,
+.Settings--is-shown .Settings__toggle {
+  opacity: 1;
 }
 
 .Settings__modal {
@@ -18,7 +24,7 @@
 }
 
 .Settings__modal::before {
-  border: calc(9rem / 14) solid transparent;
+  border: calc(9rem / 14) solid transparent; /* half fontawesome fixed width */
   color: #EEEEEE;
   content: '';
   position: absolute;
