@@ -2,6 +2,7 @@ import React from 'react';
 import './ShortcutGrid.css';
 
 import Shortcut from '../Shortcut';
+import Settings from '../Settings';
 
 const ShortcutGrid = ({
   shortcuts
@@ -12,6 +13,13 @@ const ShortcutGrid = ({
          <Shortcut {...shortcut}/>
        </div>
      ))}
+
+    <Settings
+        className="ShortcutGrid__settings"
+        modalPosition="bottom"
+        modalAlignment="right">
+      Shortcut Settings
+    </Settings>
   </div>
 );
 

@@ -5,6 +5,7 @@ import './UnsplashWallpaper.css';
 
 import Icon from '../Icon';
 import UnsplashPhoto from '../UnsplashPhoto';
+import Settings from '../Settings';
 
 const unsplash = new Unsplash({
   applicationId: process.env.REACT_APP_UNSPLASH_APPID,
@@ -110,12 +111,21 @@ class UnsplashWallpaper extends Component {
           {children}
         </div>
 
-        <button
-            className="Wallpaper__refresh"
-            onClick={this._handleRefresh}
-            disabled={isLoading}>
-          <Icon name="refresh" fixed spin={isLoading}/>
-        </button>
+        <div className="Wallpaper__actions">
+          <button
+              className="Wallpaper__refresh"
+              onClick={this._handleRefresh}
+              disabled={isLoading}>
+            <Icon name="refresh" fixed spin={isLoading}/>
+          </button>
+
+          <Settings
+              className="Wallpaper__settings"
+              modalPosition="top"
+              modalAlignment="left">
+            Wallpaper Settings
+          </Settings>
+        </div>
       </div>
     );
   }
