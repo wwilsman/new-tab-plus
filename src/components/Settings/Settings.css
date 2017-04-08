@@ -30,52 +30,62 @@
   position: absolute;
 }
 
-.Settings__modal--position-top {
+.Settings__modal--pos-top {
   bottom: 100%;
   margin-bottom: 1rem;
   top: auto;
 }
 
-.Settings__modal--position-top::before {
+.Settings__modal--pos-top::before {
   border-top-color: currentcolor;
   border-bottom-width: 0;
   top: 100%;
 }
 
-.Settings__modal--position-left {
+.Settings__modal--pos-left {
   left: auto;
   margin-right: 1rem;
   right: 100%;
 }
 
-.Settings__modal--position-left::before {
+.Settings__modal--pos-left::before {
   border-left-color: currentcolor;
   border-right-width: 0;
   left: 100%;
 }
 
-.Settings__modal--position-bottom {
+.Settings__modal--pos-bottom {
   margin-top: 1rem;
   top: 100%;
 }
 
-.Settings__modal--position-bottom::before {
+.Settings__modal--pos-bottom::before {
   border-bottom-color: currentcolor;
   border-top-width: 0;
   bottom: 100%;
   top: auto;
 }
 
-.Settings__modal--position-right {
+.Settings__modal--pos-right {
   margin-left: 1rem;
   left: 100%;
 }
 
-.Settings__modal--position-right::before {
+.Settings__modal--pos-right::before {
   border-right-color: currentcolor;
   border-left-width: 0;
   left: auto;
   right: 100%;
+}
+
+.Settings__modal--pos-center {
+  left: 50%;
+  top: 50%;
+}
+
+.Settings__modal--pos-center::before {
+  left: 50%;
+  transform: translateX(-50%);
 }
 
 .Settings__modal--align-top {
@@ -112,4 +122,12 @@
 .Settings__modal--align-right::before {
   left: auto;
   right: 1rem;
+}
+
+.Settings__modal--align-center {
+  transform: translate(-50%, -50%);
+}
+
+.Settings__modal--align-center::before {
+  content: none;
 }

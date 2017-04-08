@@ -6,21 +6,32 @@ import Settings from '../Settings';
 
 const ShortcutGrid = ({
   shortcuts
-}) => (
-  <div className="ShortcutGrid">
-    {shortcuts.map(({ id, ...shortcut }) => (
-       <div key={id} className="ShortcutGrid__item">
-         <Shortcut {...shortcut}/>
-       </div>
-     ))}
+}) => {
+  const isEmpty = !shortcuts.length;
 
-    <Settings
-        className="ShortcutGrid__settings"
-        modalPosition="bottom"
-        modalAlignment="right">
-      Shortcut Settings
-    </Settings>
-  </div>
-);
+  const className = [
+    'ShortcutGrid',
+    isEmpty && 'ShortcutGrid--is-empty'
+  ].filter(Boolean).join(' ');
+
+  return (
+    <div className={className}>
+      <div className="ShortcutGrid__items">
+        {shortcuts.map(({ id, ...shortcut }) => (
+          <div key={id} className="ShortcutGrid__item">
+            <Shortcut {...shortcut}/>
+          </div>
+        ))}
+      </div>
+
+      <Settings
+          modalPosition={isEmpty ? 'center' : 'bottom'}
+          modalAlignment={isEmpty ? 'center' : 'right'}
+          toggleIcon="plus">
+        New Shortcut Settings
+      </Settings>
+    </div>
+  );
+};
 
 export default ShortcutGrid;

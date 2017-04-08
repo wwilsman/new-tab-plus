@@ -4,82 +4,120 @@ import './Settings.css';
 
 import Icon from '../Icon';
 
+const positions = ['top', 'right', 'bottom', 'left', 'center'];
+
 class Settings extends Component {
   static propTypes = {
-    modalPosition: PropTypes.oneOf(['top', 'right', 'bottom', 'left']).isRequired,
-    modalAlignment: PropTypes.oneOf(['top', 'right', 'bottom', 'left']).isRequired
-  }
+    modalPosition: PropTypes.oneOf(positions),
+    modalAlignment: PropTypes.oneOf(positions),
+    toggleIcon: PropTypes.string
+  };
+
+  static defaultProps = {
+    modalPosition: 'center',
+    modalAlignment: 'center',
+    toggleIcon: 'cog'
+  };
 
   state = {
-    show: false
-  }
+    isShown: false
+  };
 
   componentDidMount() {
-    this._element = findDOMNode(this);
-    document.addEventListener('click', this._handleOutsideClick);
+    this._registerOutsideClick();
   }
 
   componentWillUnmount() {
     document.removeEventListener('click', this._handleOutsideClick);
   }
 
+  componentWillReceiveProps({ show }) {
+    const { isShown } = this.state;
+    const isShowUndefined = show === undefined;
+
+    this.setState({
+      isShown: isShowUndefined ? isShown : !!show,
+      showToggle: isShowUndefined
+    });
+  }
+
+  componentDidUpdate() {
+    this._registerOutsideClick();
+  }
+
+  _registerOutsideClick = () => {
+    if (this.state.isShown) {
+      this._element = findDOMNode(this);
+      document.addEventListener('click', this._handleOutsideClick);
+    } else {
+      this._element = null;
+      document.removeEventListener('click', this._handleOutsideClick);
+    }
+  }
+
   _handleOutsideClick = (e) => {
-    const isVisible = this.state.show;
+    if (!this._element) return;
+
     const isNotTarget = this._element !== e.target;
     const doesNotContainTarget = !this._element.contains(e.target);
 
-    if (isVisible && isNotTarget && doesNotContainTarget) {
+    if (isNotTarget && doesNotContainTarget) {
       e.preventDefault();
 
       this.setState({
-        show: false
+        isShown: false
       });
     }
   }
 
-  toggle = () => {
-    this.setState(({ show }) => ({
-      show: !show
-    }))
+  _handleToggle = () => {
+    this.toggle();
+  }
+
+  toggle(value) {
+    this.setState(({ isShown }) => ({
+      isShown: typeof value === 'boolean' ? value : !isShown
+    }));
   }
 
   render() {
     const {
-      show
+      isShown
     } = this.state;
 
     const {
-      className,
       modalPosition,
       modalAlignment,
+      toggleIcon,
       children
     } = this.props;
 
-    const baseClassName = [
+    const rootClassName = [
       'Settings',
-      !!show && 'Settings--is-shown',
-      className
+      !!isShown && 'Settings--is-shown',
     ].filter(Boolean).join(' ');
-
+    
     const modalClassName = [
       'Settings__modal',
-      `Settings__modal--position-${modalPosition}`,
+      `Settings__modal--pos-${modalPosition}`,
       `Settings__modal--align-${modalAlignment}`,
     ].join(' ');
 
     return (
-      <div className={baseClassName}>
-        <button className="Settings__toggle" onClick={this.toggle}>
-          <Icon name="cog" fixed/>
+      <div className={rootClassName}>
+        <button
+            className="Settings__toggle"
+            onClick={this._handleToggle}>
+          <Icon name={toggleIcon} fixed/>
         </button>
 
-        {!!show && (
-           <div className={modalClassName}>
-             {children}
-           </div>
-         )}
+        {!!isShown && (
+          <div className={modalClassName}>
+            {children}
+          </div>
+        )}
       </div>
-    )
+    );
   }
 }
 

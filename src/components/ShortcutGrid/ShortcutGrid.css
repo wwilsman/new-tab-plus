@@ -1,12 +1,15 @@
 .ShortcutGrid {
-  align-items: flex-start;
-  flex-direction: row;
-  flex-wrap: wrap;
   left: 50%;
   padding: 0 1.5rem;
   position: fixed;
   top: 50%;
   transform: translate(-50%, -50%);
+}
+
+.ShortcutGrid__items {
+  align-items: flex-start;
+  flex-direction: row;
+  flex-wrap: wrap;
 }
 
 .ShortcutGrid__item {
@@ -15,7 +18,7 @@
   width: 5rem;
 }
 
-.ShortcutGrid__settings {
+.ShortcutGrid .Settings {
   display: none;
   left: auto;
   margin-left: 0.5rem;
@@ -23,6 +26,19 @@
   right: 0;
 }
 
-.ShortcutGrid:hover .ShortcutGrid__settings {
+.ShortcutGrid:hover .Settings,
+.ShortcutGrid .Settings--is-shown,
+.ShortcutGrid--is-empty .Settings {
   display: block;
+}
+
+.ShortcutGrid--is-empty .Settings {
+  margin: 0.5rem;
+  position: relative;
+}
+
+.ShortcutGrid--is-empty .Settings__toggle {
+  height: 4rem;
+  font-size: 2rem;
+  width: 5rem;
 }
