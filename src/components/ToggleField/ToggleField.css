@@ -1,0 +1,40 @@
+.ToggleField {
+  align-items: center;
+  flex-direction: row;
+  width: 100%;
+}
+
+.ToggleField__label {
+  margin-right: 1rem;
+}
+
+.ToggleField__toggle {
+  background: rgba(0,0,0,0.1);
+  border: 1px solid rgba(0,0,0,0.1);
+  border-radius: 0.75em;
+  height: 1.5em;
+  margin: -0.25em 0 -0.25em auto;
+  width: 2.5em;
+}
+
+.ToggleField__toggle::before {
+  background: white;
+  border: 1px solid rgba(0,0,0,0.2);
+  border-radius: inherit;
+  content: '';
+  height: 1.5em;
+  left: -1px;
+  position: absolute;
+  top: -1px;
+  width: 1.5em;
+}
+
+.ToggleField__toggle--enabled {
+  background: yellowgreen;
+}
+
+.ToggleField__toggle--enabled::before {
+  left: auto;
+  right: -1px;
+}
+
