@@ -1,4 +1,4 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Children, Component, PropTypes } from 'react';
 import { findDOMNode } from 'react-dom';
 import './Settings.css';
 
@@ -113,7 +113,11 @@ class Settings extends Component {
 
         {!!isShown && (
           <div className={modalClassName}>
-            {children}
+            {Children.map(children, (child) => !!child && (
+              <div className="Settings__section">
+                {child}
+              </div>
+            ))}
           </div>
         )}
       </div>
