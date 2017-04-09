@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 
 import Settings from '../Settings';
+import Section from '../SettingsSection';
 import TextField from '../TextField';
 import ToggleField from '../ToggleField';
 
@@ -78,23 +79,29 @@ class WallpaperSettings extends Component {
           onToggle={onToggle}
           popupPosition="top"
           popupAlignment="left">
-        <TextField
-            label="Query"
-            placeholder="nature"
-            onChangeText={this._handleChangeQuery}
-            value={query}
-        />
+        <Section>
+          <TextField
+              label="Query"
+              placeholder="nature"
+              onChangeText={this._handleChangeQuery}
+              value={query}
+          />
+        </Section>
 
-        <ToggleField
-            label="Featured"
-            onChange={this._handleChangeFeatured}
-            value={featured}
-        />
+        <Section>
+          <ToggleField
+              label="Featured"
+              onChange={this._handleChangeFeatured}
+              value={featured}
+          />
+        </Section>
 
         {!!isDirty && (
-          <button onClick={this._handleSave}>
-            save
-          </button>
+          <Section>
+            <button onClick={this._handleSave}>
+              save
+            </button>
+          </Section>
         )}
       </Settings>
     )

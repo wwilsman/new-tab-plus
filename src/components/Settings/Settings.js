@@ -1,4 +1,4 @@
-import React, { Children, Component, PropTypes } from 'react';
+import React, { Component, PropTypes } from 'react';
 import './Settings.css';
 
 import Icon from '../Icon';
@@ -76,11 +76,7 @@ class Settings extends Component {
               position={popupPosition}
               alignment={popupAlignment}
               onClickOutside={this._handleHide}>
-            {Children.map(children, (child) => !!child && (
-              <div className="Settings__section">
-                {child}
-              </div>
-            ))}
+            {children}
           </Popup>
         )}
       </div>
