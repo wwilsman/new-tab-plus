@@ -5,7 +5,8 @@ import UnsplashWallpaper from './UnsplashWallpaper';
 
 const UnsplashWallpaperContainer = connect(
   (state) => ({
-    cache: state.photos
+    cache: state.photos,
+    settings: state.settings.wallpaper
   }), {
     cachePhoto
   }, null, {

@@ -1,6 +1,11 @@
 import { REHYDRATE } from 'redux-persist/constants';
 
 const defaultSettings = {
+  wallpaper: {
+    query: '',
+    featured: true,
+    fetch: false
+  }
 };
 
 const settingsReducer = (state = defaultSettings, action) => {
@@ -11,6 +16,11 @@ const settingsReducer = (state = defaultSettings, action) => {
       return {
         ...state,
         ...settings,
+        wallpaper: {
+          ...state.wallpaper,
+          ...settings.wallpaper,
+          fetch: true
+        }
       };
 
     case 'SAVE_SETTINGS':

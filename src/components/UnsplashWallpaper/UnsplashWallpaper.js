@@ -5,7 +5,7 @@ import './UnsplashWallpaper.css';
 
 import Icon from '../Icon';
 import UnsplashPhoto from '../UnsplashPhoto';
-import Settings from '../Settings';
+import WallpaperSettings from '../WallpaperSettings';
 
 const unsplash = new Unsplash({
   applicationId: process.env.REACT_APP_UNSPLASH_APPID,
@@ -17,11 +17,11 @@ class UnsplashWallpaper extends Component {
   static propTypes = {
     cache: PropTypes.array.isRequired,
     cachePhoto: PropTypes.func.isRequired,
-    query: PropTypes.string
-  };
-
-  static defaultProps = {
-    query: ''
+    settings: PropTypes.shape({
+      query: PropTypes.string.isRequired,
+      featured: PropTypes.bool.isRequired,
+      fetch: PropTypes.bool.isRequired
+    }).isRequired
   };
 
   state = {
@@ -30,12 +30,29 @@ class UnsplashWallpaper extends Component {
   };
 
   componentWillMount() {
-    this.getRandomFeaturedPhoto();
+    if (this.props.settings.fetch) {
+      this.getRandomFeaturedPhoto();
+    }
   }
 
   componentWillReceiveProps(props) {
-    if (props.query !== this.props.query) {
-      this.getRandomFeaturedPhoto(props.query);
+    const {
+      query,
+      featured,
+      fetch
+    } = props.settings;
+
+    const {
+      query:oldQuery,
+      featured:oldFeatured,
+      fetch:oldFetch
+    } = this.props.settings;
+
+    const settingChanged = query !== oldQuery ||
+          featured !== oldFeatured;
+
+    if (fetch && (!oldFetch || settingChanged)) {
+      this.getRandomFeaturedPhoto(query, featured);
     }
   }
 
@@ -44,9 +61,12 @@ class UnsplashWallpaper extends Component {
   }
 
   getRandomFeaturedPhoto(
-    query = this.props.query
+    query = this.props.settings.query,
+    featured = this.props.settings.featured
   ) {
-    const { cachePhoto } = this.props;
+    const {
+      cachePhoto
+    } = this.props;
 
     this.setState({
       isLoading: true
@@ -54,8 +74,8 @@ class UnsplashWallpaper extends Component {
 
     unsplash
       .photos.getRandomPhoto({
-        featured: true,
-        query
+        query: query.replace(' ', '+'),
+        featured
       })
       .then((res) => {
         const limit = parseInt(res.headers.get('x-ratelimit-remaining'), 10);
@@ -119,12 +139,7 @@ class UnsplashWallpaper extends Component {
             <Icon name="refresh" fixed spin={isLoading}/>
           </button>
 
-          <Settings
-              className="Wallpaper__settings"
-              modalPosition="top"
-              modalAlignment="left">
-            Wallpaper Settings
-          </Settings>
+          <WallpaperSettings/>
         </div>
       </div>
     );

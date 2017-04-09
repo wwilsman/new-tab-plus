@@ -24,7 +24,7 @@ a {
   text-decoration: none;
 }
 
-button {
+input, button {
   appearance: none;
   background: transparent;
   border: 0 solid;
