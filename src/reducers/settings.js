@@ -13,12 +13,18 @@ const settingsReducer = (state = defaultSettings, action) => {
     case REHYDRATE:
       const { settings } = action.payload;
 
-      return {
+      return settings ? {
         ...state,
         ...settings,
         wallpaper: {
           ...state.wallpaper,
           ...settings.wallpaper,
+          fetch: true
+        }
+      } : {
+        ...state,
+        wallpaper: {
+          ...state.wallpaper,
           fetch: true
         }
       };
