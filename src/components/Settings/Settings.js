@@ -1,21 +1,17 @@
 import React, { Children, Component, PropTypes } from 'react';
-import { findDOMNode } from 'react-dom';
 import './Settings.css';
 
 import Icon from '../Icon';
-
-const positions = ['top', 'right', 'bottom', 'left', 'center'];
+import Popup from '../Popup';
 
 class Settings extends Component {
   static propTypes = {
-    modalPosition: PropTypes.oneOf(positions),
-    modalAlignment: PropTypes.oneOf(positions),
+    popupPosition: Popup.propTypes.position,
+    popupAlignment: Popup.propTypes.alignment,
     toggleIcon: PropTypes.string
   };
 
   static defaultProps = {
-    modalPosition: 'center',
-    modalAlignment: 'center',
     toggleIcon: 'cog'
   };
 
@@ -23,55 +19,20 @@ class Settings extends Component {
     isShown: false
   };
 
-  componentDidMount() {
-    this._registerOutsideClick();
-  }
-
-  componentWillUnmount() {
-    document.removeEventListener('click', this._handleOutsideClick);
-  }
-
   componentWillReceiveProps({ show }) {
-    const { isShown } = this.state;
-    const isShowUndefined = show === undefined;
-
-    this.setState({
-      isShown: isShowUndefined ? isShown : !!show,
-      showToggle: isShowUndefined
-    });
-  }
-
-  componentDidUpdate() {
-    this._registerOutsideClick();
-  }
-
-  _registerOutsideClick = () => {
-    if (this.state.isShown) {
-      this._element = findDOMNode(this);
-      document.addEventListener('click', this._handleOutsideClick);
-    } else {
-      this._element = null;
-      document.removeEventListener('click', this._handleOutsideClick);
-    }
-  }
-
-  _handleOutsideClick = (e) => {
-    if (!this._element) return;
-
-    const isNotTarget = this._element !== e.target;
-    const doesNotContainTarget = !this._element.contains(e.target);
-
-    if (isNotTarget && doesNotContainTarget) {
-      e.preventDefault();
-
+    if (show !== undefined) {
       this.setState({
-        isShown: false
+        isShown: !!show
       });
     }
   }
 
   _handleToggle = () => {
     this.toggle();
+  }
+
+  _handleHide = () => {
+    this.toggle(false);
   }
 
   toggle(value) {
@@ -86,8 +47,8 @@ class Settings extends Component {
     } = this.state;
 
     const {
-      modalPosition,
-      modalAlignment,
+      popupPosition,
+      popupAlignment,
       toggleIcon,
       children
     } = this.props;
@@ -96,12 +57,6 @@ class Settings extends Component {
       'Settings',
       !!isShown && 'Settings--is-shown',
     ].filter(Boolean).join(' ');
-    
-    const modalClassName = [
-      'Settings__modal',
-      `Settings__modal--pos-${modalPosition}`,
-      `Settings__modal--align-${modalAlignment}`,
-    ].join(' ');
 
     return (
       <div className={rootClassName}>
@@ -112,13 +67,16 @@ class Settings extends Component {
         </button>
 
         {!!isShown && (
-          <div className={modalClassName}>
+          <Popup
+              position={popupPosition}
+              alignment={popupAlignment}
+              onClickOutside={this._handleHide}>
             {Children.map(children, (child) => !!child && (
               <div className="Settings__section">
                 {child}
               </div>
             ))}
-          </div>
+          </Popup>
         )}
       </div>
     );

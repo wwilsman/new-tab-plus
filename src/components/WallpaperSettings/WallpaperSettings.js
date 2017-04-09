@@ -70,8 +70,8 @@ class WallpaperSettings extends Component {
 
     return (
       <Settings
-          modalPosition="top"
-          modalAlignment="left">
+          popupPosition="top"
+          popupAlignment="left">
         <TextField
             label="Query"
             placeholder="nature"
