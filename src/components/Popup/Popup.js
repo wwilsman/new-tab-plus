@@ -2,27 +2,34 @@ import React, { Component, PropTypes } from 'react';
 import { findDOMNode } from 'react-dom';
 import './Popup.css';
 
+const popupTypes = ['default', 'error'];
 const positions = ['top', 'right', 'bottom', 'left', 'center'];
 
 class Popup extends Component {
   static propTypes = {
+    type: PropTypes.oneOf(popupTypes),
     position: PropTypes.oneOf(positions),
     alignment: PropTypes.oneOf(positions),
     onClickOutside: PropTypes.func
   };
 
   static defaultProps = {
+    type: 'default',
     position: 'center',
     alignment: 'center'
   };
 
   componentDidMount() {
-    this._element = findDOMNode(this);
-    document.addEventListener('click', this._handleOutsideClick);
+    if (this.props.onClickOutside) {
+      this._element = findDOMNode(this);
+      document.addEventListener('click', this._handleOutsideClick);
+    }
   }
 
   componentWillUnmount() {
-    document.removeEventListener('click', this._handleOutsideClick);
+    if (this.props.onClickOutside) {
+      document.removeEventListener('click', this._handleOutsideClick);
+    }
   }
 
   _handleOutsideClick = (e) => {
@@ -43,6 +50,7 @@ class Popup extends Component {
 
   render() {
     const {
+      type,
       position,
       alignment,
       children
@@ -50,6 +58,7 @@ class Popup extends Component {
 
     const className = [
       'Popup',
+      `Popup--${type}`,
       `Popup--pos-${position}`,
       `Popup--align-${alignment}`,
     ].join(' ');

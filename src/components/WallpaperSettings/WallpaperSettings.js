@@ -10,7 +10,8 @@ class WallpaperSettings extends Component {
       query: PropTypes.string.isRequired,
       featured: PropTypes.bool.isRequired
     }).isRequired,
-    saveSettings: PropTypes.func.isRequired
+    saveSettings: PropTypes.func.isRequired,
+    onToggle: Settings.propTypes.onToggle
   };
 
   state = {
@@ -61,6 +62,10 @@ class WallpaperSettings extends Component {
     } = this.state;
 
     const {
+      onToggle
+    } = this.props;
+
+    const {
       query:ogQuery,
       featured:ogFeatured
     } = this.props.settings;
@@ -70,6 +75,7 @@ class WallpaperSettings extends Component {
 
     return (
       <Settings
+          onToggle={onToggle}
           popupPosition="top"
           popupAlignment="left">
         <TextField

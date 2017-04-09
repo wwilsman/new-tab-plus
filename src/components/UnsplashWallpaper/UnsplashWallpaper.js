@@ -6,6 +6,7 @@ import './UnsplashWallpaper.css';
 import Icon from '../Icon';
 import UnsplashPhoto from '../UnsplashPhoto';
 import WallpaperSettings from '../WallpaperSettings';
+import Popup from '../Popup';
 
 const unsplash = new Unsplash({
   applicationId: process.env.REACT_APP_UNSPLASH_APPID,
@@ -26,7 +27,9 @@ class UnsplashWallpaper extends Component {
 
   state = {
     image: false,
-    isLoading: true
+    isLoading: true,
+    errors: false,
+    showErrors: true
   };
 
   componentWillMount() {
@@ -60,6 +63,12 @@ class UnsplashWallpaper extends Component {
     this.getRandomFeaturedPhoto();
   }
 
+  _handleShowErrors = (isSettingsShown) => {
+    this.setState({
+      showErrors: !isSettingsShown
+    });
+  }
+
   getRandomFeaturedPhoto(
     query = this.props.settings.query,
     featured = this.props.settings.featured
@@ -69,7 +78,8 @@ class UnsplashWallpaper extends Component {
     } = this.props;
 
     this.setState({
-      isLoading: true
+      isLoading: true,
+      errors: false
     });
 
     unsplash
@@ -80,25 +90,40 @@ class UnsplashWallpaper extends Component {
       .then((res) => {
         const limit = parseInt(res.headers.get('x-ratelimit-remaining'), 10);
 
-        if (res.ok) {
+        if (res.ok || res.status === 404) {
           return res.json();
         } else if (limit === 0) {
           return this.getRandomCachedPhoto();
         }
+
+        debugger;
       })
       .then((data) => {
         if (!data) return;
+
+        if (data.errors) {
+          this.setState({
+            isLoading: false,
+            errors: data.errors
+          });
+
+          return;
+        }
+
         cachePhoto(data);
-
-        let img = new Image();
-
-        img.onload = () => this.setState({
-          image: data,
-          isLoading: false
-        });
-
-        img.src = data.urls.thumb;
+        this.preloadImage(data);
       });
+  }
+
+  preloadImage(image) {
+    let img = new Image();
+
+    img.onload = () => this.setState({
+      isLoading: false,
+      image
+    });
+
+    img.src = image.urls.thumb;
   }
 
   getRandomCachedPhoto() {
@@ -108,8 +133,16 @@ class UnsplashWallpaper extends Component {
   }
 
   render() {
-    const { children } = this.props;
-    const { image, isLoading } = this.state;
+    const {
+      children
+    } = this.props;
+
+    const {
+      image,
+      isLoading,
+      errors,
+      showErrors
+    } = this.state;
 
     return (
       <div className="Wallpaper">
@@ -139,7 +172,22 @@ class UnsplashWallpaper extends Component {
             <Icon name="refresh" fixed spin={isLoading}/>
           </button>
 
-          <WallpaperSettings/>
+          <div className="Wallpaper__settings">
+            <WallpaperSettings onToggle={this._handleShowErrors}/>
+
+            {errors && showErrors && (
+              <Popup
+                  type="error"
+                  position="top"
+                  alignment="left">
+                {errors.map((err, i) => (
+                  <div key={i}>
+                    {err}
+                  </div>
+                ))}
+              </Popup>
+            )}
+          </div>
         </div>
       </div>
     );

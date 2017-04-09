@@ -8,7 +8,8 @@ class Settings extends Component {
   static propTypes = {
     popupPosition: Popup.propTypes.position,
     popupAlignment: Popup.propTypes.alignment,
-    toggleIcon: PropTypes.string
+    toggleIcon: PropTypes.string,
+    onToggle: PropTypes.func
   };
 
   static defaultProps = {
@@ -36,9 +37,13 @@ class Settings extends Component {
   }
 
   toggle(value) {
-    this.setState(({ isShown }) => ({
-      isShown: typeof value === 'boolean' ? value : !isShown
-    }));
+    const { onToggle } = this.props;
+
+    this.setState(({ isShown }) => {
+      isShown = typeof value === 'boolean' ? value : !isShown
+      onToggle && onToggle(isShown);
+      return { isShown };
+    });
   }
 
   render() {
