@@ -1,0 +1,14 @@
+.TextField {
+  align-items: center;
+  flex-direction: row;
+  width: 100%;
+}
+
+.TextField__label {
+  margin-right: 1rem;
+}
+
+.TextField__input {
+  flex: 1;
+  text-align: right;
+}
