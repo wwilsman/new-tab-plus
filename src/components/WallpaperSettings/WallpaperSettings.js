@@ -12,7 +12,8 @@ class WallpaperSettings extends Component {
       featured: PropTypes.bool.isRequired
     }).isRequired,
     saveSettings: PropTypes.func.isRequired,
-    onToggle: Settings.propTypes.onToggle
+    onToggle: Settings.propTypes.onToggle,
+    errors: PropTypes.arrayOf(PropTypes.string)
   };
 
   state = {
@@ -63,7 +64,8 @@ class WallpaperSettings extends Component {
     } = this.state;
 
     const {
-      onToggle
+      onToggle,
+      errors
     } = this.props;
 
     const {
@@ -79,6 +81,16 @@ class WallpaperSettings extends Component {
           onToggle={onToggle}
           popupPosition="top"
           popupAlignment="left">
+        {!!(errors && errors.length) && (
+          <Section type="error">
+            {errors.map((err, i) => (
+              <div key={i}>
+                {err}
+              </div>
+            ))}
+          </Section>
+        )}
+
         <Section>
           <TextField
               label="Query"

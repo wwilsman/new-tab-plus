@@ -28,7 +28,7 @@ class UnsplashWallpaper extends Component {
   state = {
     image: false,
     isLoading: true,
-    errors: false,
+    errors: null,
     showErrors: true
   };
 
@@ -79,7 +79,7 @@ class UnsplashWallpaper extends Component {
 
     this.setState({
       isLoading: true,
-      errors: false
+      errors: null
     });
 
     unsplash
@@ -173,7 +173,10 @@ class UnsplashWallpaper extends Component {
           </button>
 
           <div className="Wallpaper__settings">
-            <WallpaperSettings onToggle={this._handleShowErrors}/>
+            <WallpaperSettings
+                onToggle={this._handleShowErrors}
+                errors={errors}
+            />
 
             {errors && showErrors && (
               <Popup
