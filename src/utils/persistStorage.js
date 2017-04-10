@@ -2,15 +2,15 @@
 
 let storage;
 
-const chromeStorage = {
-  getItem: (key, cb) => chrome.storage.sync.get(key, cb),
-  setItem: (key, item, cb) => chrome.storage.sync.set({ [key]: item }, cb),
-  removeItem: (key, cb) => chrome.storage.sync.remove(key, cb),
-  getAllKeys: (cb) => chrome.storage.sync.get(null, (items) => cb(null, Object.keys(items)))
-};
-
 if (chrome && chrome.storage) {
-  storage = chromeStorage;
+  const chromeStorage = chrome.storage.sync;
+
+  storage = {
+    getItem: (key, cb) => chromeStorage.get(key, (items) => cb(null, items[key])),
+    setItem: (key, item, cb) => chromeStorage.set({ [key]: item }, cb),
+    removeItem: (key, cb) => chromeStorage.remove(key, cb),
+    getAllKeys: (cb) => chromeStorage.get(null, (items) => cb(null, Object.keys(items)))
+  };
 }
 
 export default storage;
