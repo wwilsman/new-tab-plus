@@ -1,17 +1,20 @@
 .SettingsSection {
   border-bottom: 1px solid rgba(0,0,0,0.1);
-  flex-direction: row;
-  font-size: 0.8125rem;
-  padding: 1rem 1.5rem;
+  padding: 0.8125rem 1rem;
 }
 
 .SettingsSection:last-child {
   border-bottom: none;
 }
 
+.SettingsSection--default {
+  flex-direction: row;
+}
+
 .SettingsSection--error {
   background: red;
   color: white;
+  font-size: 0.75rem;
 }
 
 .SettingsSection--error:first-child {
@@ -22,13 +25,19 @@
 }
 
 .SettingsSection button {
-  background: rgba(0,0,0,0.05);
+  background: rgba(0,0,0,0.1);
+  border: 1px solid #6666CC;
   border-radius: 0.25rem;
-  color: rgba(0,0,0,0.6);
+  color: #6666CC;
   height: 2rem;
   margin: -0.25rem -0.5rem -0.5rem;
   margin-left: auto;
+  padding-bottom: 0.125em;
   width: 50%;
+}
+
+.SettingsSection button:hover {
+  background: rgba(0,0,0,0.05);
 }
 
 .SettingsSection button:nth-last-child(2) {

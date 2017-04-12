@@ -2,10 +2,10 @@
   background: #EEEEEE;
   border-radius: 0.25rem;
   box-shadow: 0 0 1rem rgba(0,0,0,0.2);
-  font-size: 0.875rem;
+  font-size: 0.8125rem;
   padding: 0.25rem 0;
   position: absolute;
-  width: 16rem;
+  width: 17rem;
 }
 
 .Popup::before {
@@ -18,7 +18,8 @@
 .Popup--error {
   background: red;
   color: white;
-  padding: 1.25rem 1.5rem;
+  font-size: 0.75rem;
+  padding: 1rem;
 }
 
 .Popup--error::before {
