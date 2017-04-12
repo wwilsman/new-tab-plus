@@ -27,7 +27,8 @@ class UnsplashWallpaper extends Component {
       query: PropTypes.string.isRequired,
       featured: PropTypes.bool.isRequired,
       fetch: PropTypes.bool.isRequired
-    }).isRequired
+    }).isRequired,
+    saveSettings: PropTypes.func.isRequired
   };
 
   state = {
@@ -43,24 +44,18 @@ class UnsplashWallpaper extends Component {
     }
   }
 
-  componentWillReceiveProps(props) {
-    const {
-      query,
-      featured,
-      fetch
-    } = props.settings;
-
+  componentWillReceiveProps({ settings }) {
     const {
       query:oldQuery,
       featured:oldFeatured,
       fetch:oldFetch
     } = this.props.settings;
 
-    const settingChanged = query !== oldQuery ||
-          featured !== oldFeatured;
+    const settingChanged = settings.query !== oldQuery ||
+          settings.featured !== oldFeatured;
 
-    if (fetch && (!oldFetch || settingChanged)) {
-      this.getRandomFeaturedPhoto(query, featured);
+    if (settings.fetch && (!oldFetch || settingChanged)) {
+      this.getRandomFeaturedPhoto(settings);
     }
   }
 
@@ -71,6 +66,17 @@ class UnsplashWallpaper extends Component {
   _handleShowErrors = (isSettingsShown) => {
     this.setState({
       showErrors: !isSettingsShown
+    });
+  }
+
+  _handleTrySettings = (settings, callback) => {
+    this.getRandomFeaturedPhoto(settings, false, (errors) => {
+      if (!errors) {
+        this.ignoreNextFetch = true;
+        this.props.saveSettings(settings);
+      }
+
+      callback(errors);
     });
   }
 
@@ -87,12 +93,23 @@ class UnsplashWallpaper extends Component {
   }
 
   getRandomFeaturedPhoto(
-    query = this.props.settings.query,
-    featured = this.props.settings.featured
+    settings = this.props.settings,
+    useCacheBackup = true,
+    callback
   ) {
     const {
       cachePhoto
     } = this.props;
+
+    const {
+      query,
+      featured
+    } = settings
+
+    if (this.ignoreNextFetch) {
+      this.ignoreNextFetch = false;
+      return;
+    }
 
     this.setState({
       isLoading: true,
@@ -107,22 +124,31 @@ class UnsplashWallpaper extends Component {
       .then((res) => {
         if (res.status === 403) {
           return res.text().then((text) => ({
-            errors: [text]
+            errors: [text + '.']
           }));
         }
 
         return res.json();
       })
       .then(({ errors, ...data }) => {
-        if (errors) {
+        if (errors && useCacheBackup) {
           data = this.getRandomCachedPhoto();
-          errors = [...errors, 'Using Cached Photo'];
-        } else {
+          errors = [...errors, 'Using Cached Photo.'];
+        } else if (!errors) {
           cachePhoto(data);
         }
 
-        if (data) {
+        if (!!Object.keys(data).length) {
           this.preloadImage(data, errors);
+        } else {
+          this.setState((state) => ({
+            errors: callback ? state.errors : errors,
+            isLoading: false
+          }));
+        }
+
+        if (callback) {
+          callback(errors);
         }
       });
   }
@@ -135,13 +161,14 @@ class UnsplashWallpaper extends Component {
       return cache[rand];
     } else {
       this.setState({
-        errors: ['Cannot Find Cached Photos']
+        errors: ['Cannot Find Cached Photos.']
       });
     }
   }
 
   render() {
     const {
+      settings,
       children
     } = this.props;
 
@@ -153,7 +180,7 @@ class UnsplashWallpaper extends Component {
     } = this.state;
 
     const errorMessage = !!(errors && errors.length) ?
-          fixWidow(errors.join('. ')) + '.' : null;
+          fixWidow(errors.join(' ')) : null;
 
     return (
       <div className="Wallpaper">
@@ -185,8 +212,10 @@ class UnsplashWallpaper extends Component {
 
           <div className="Wallpaper__settings">
             <WallpaperSettings
+                onTrySettings={this._handleTrySettings}
                 onToggle={this._handleShowErrors}
                 error={errorMessage}
+                settings={settings}
             />
 
             {(errorMessage && showErrors) && (

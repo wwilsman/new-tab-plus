@@ -1,5 +1,6 @@
 import { connect } from 'react-redux';
 import { cachePhoto } from '../../actions/photos';
+import { saveSettings } from '../../actions/settings';
 
 import UnsplashWallpaper from './UnsplashWallpaper';
 
@@ -8,7 +9,9 @@ const UnsplashWallpaperContainer = connect(
     cache: state.photos,
     settings: state.settings.wallpaper
   }), {
-    cachePhoto
+    cachePhoto,
+    saveSettings: (settings) =>
+      saveSettings('wallpaper', settings)
   }, null, {
     pure: false
   }

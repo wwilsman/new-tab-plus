@@ -6,7 +6,7 @@ A better new tab experience
 
 - [ ] Group components by function.
 - [ ] Bake in settings section component into field components.
-- [ ] Attempt to load the next wallpaper before saving settings to prevent
+- [x] Attempt to load the next wallpaper before saving settings to prevent
   saving settings that results in an error.
 - [ ] Add clear settings button to wallpaper settings.
 - [ ] Create upload field component for shortcut icons.

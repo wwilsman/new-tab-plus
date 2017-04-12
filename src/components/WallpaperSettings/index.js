@@ -1,2 +1,2 @@
-import WallpaperSettings from './WallpaperSettingsContainer';
+import WallpaperSettings from './WallpaperSettings';
 export default WallpaperSettings;

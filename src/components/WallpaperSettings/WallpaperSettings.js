@@ -11,14 +11,15 @@ class WallpaperSettings extends Component {
       query: PropTypes.string.isRequired,
       featured: PropTypes.bool.isRequired
     }).isRequired,
-    saveSettings: PropTypes.func.isRequired,
+    onTrySettings: PropTypes.func.isRequired,
     onToggle: Settings.propTypes.onToggle,
     error: PropTypes.string
   };
 
   state = {
     query: this.props.settings.query,
-    featured: this.props.settings.featured
+    featured: this.props.settings.featured,
+    errors: null
   };
 
   componentWillReceiveProps(props) {
@@ -51,22 +52,47 @@ class WallpaperSettings extends Component {
       featured
     } = this.state;
 
-    this.props.saveSettings({
-      featured,
-      query
+    const {
+      onTrySettings
+    } = this.props;
+
+    onTrySettings({
+      query,
+      featured
+    }, (errors) => {
+      if (!errors && this.popup) {
+        this.popup.toggle(false);
+      } else if (errors) {
+        this.setState({ errors });
+      }
     });
+  }
+
+  _handleToggle = (isVisible) => {
+    const {
+      settings,
+      onToggle
+    } = this.props;
+
+    if (!isVisible) {
+      this.setState({
+        query: settings.query,
+        featured: settings.featured,
+        errors: null
+      });
+    }
+
+    if (onToggle) {
+      onToggle(isVisible);
+    }
   }
 
   render() {
     const {
       query,
-      featured
+      featured,
+      errors
     } = this.state;
-
-    const {
-      onToggle,
-      error
-    } = this.props;
 
     const {
       query:ogQuery,
@@ -76,9 +102,13 @@ class WallpaperSettings extends Component {
     const isDirty = query !== ogQuery ||
           featured !== ogFeatured;
 
+    const error = (errors && errors.length) ?
+          errors.join(' ') : this.props.error;
+
     return (
       <Settings
-          onToggle={onToggle}
+          ref={(s) => this.popup = s}
+          onToggle={this._handleToggle}
           popupPosition="top"
           popupAlignment="left">
         {!!error && (
