@@ -1,5 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 
+import Button from '../Button';
+import Icon from '../Icon';
 import Settings from '../Settings';
 import Section from '../SettingsSection';
 import TextField from '../TextField';
@@ -19,6 +21,7 @@ class WallpaperSettings extends Component {
   state = {
     query: this.props.settings.query,
     featured: this.props.settings.featured,
+    isLoading: false,
     errors: null
   };
 
@@ -46,6 +49,19 @@ class WallpaperSettings extends Component {
     this.setState({ featured });
   }
 
+  _handleReset = () => {
+    const {
+      query,
+      featured
+    } = this.props.settings
+
+    this.setState({
+      errors: null,
+      featured,
+      query
+    });
+  }
+
   _handleSave = () => {
     const {
       query,
@@ -56,6 +72,10 @@ class WallpaperSettings extends Component {
       onTrySettings
     } = this.props;
 
+    this.setState({
+      isLoading: true
+    });
+
     onTrySettings({
       query,
       featured
@@ -65,21 +85,20 @@ class WallpaperSettings extends Component {
       } else if (errors) {
         this.setState({ errors });
       }
+
+      this.setState({
+        isLoading: false
+      });
     });
   }
 
   _handleToggle = (isVisible) => {
     const {
-      settings,
       onToggle
     } = this.props;
 
     if (!isVisible) {
-      this.setState({
-        query: settings.query,
-        featured: settings.featured,
-        errors: null
-      });
+      this._handleReset();
     }
 
     if (onToggle) {
@@ -91,6 +110,7 @@ class WallpaperSettings extends Component {
     const {
       query,
       featured,
+      isLoading,
       errors
     } = this.state;
 
@@ -136,9 +156,20 @@ class WallpaperSettings extends Component {
 
         {!!isDirty && (
           <Section>
-            <button onClick={this._handleSave}>
-              save
-            </button>
+            <Button
+                onClick={this._handleReset}
+                disabled={isLoading}
+                unimportant>
+              reset
+            </Button>
+
+            <Button
+                onClick={this._handleSave}
+                disabled={isLoading}>
+              {!!isLoading ? (
+                <Icon name="circle-o-notch" spin/>
+              ) : 'save'}
+            </Button>
           </Section>
         )}
       </Settings>

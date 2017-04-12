@@ -1,0 +1,26 @@
+.Button {
+  background: rgba(0,0,0,0.1);
+  border: 1px solid;
+  border-radius: 0.25rem;
+  color: #6666CC;
+  height: 2rem;
+  padding-bottom: 0.125em;
+}
+
+.Button:not(:disabled):hover {
+  background: rgba(0,0,0,0.05);
+}
+
+.Button:disabled {
+  opacity: 0.5;
+}
+
+.Button--unimportant {
+  background: rgba(0,0,0,0.05);
+  color: rgba(0,0,0,0.4);
+}
+
+.Button--unimportant:not(:disabled):hover {
+  background: rgba(0,0,0,0);
+  color: rgba(0,0,0,0.5);
+}

@@ -24,20 +24,10 @@
   border-top-right-radius: inherit;
 }
 
-.SettingsSection button {
-  background: rgba(0,0,0,0.1);
-  border: 1px solid #6666CC;
-  border-radius: 0.25rem;
-  color: #6666CC;
-  height: 2rem;
+.SettingsSection .Button {
   margin: -0.25rem -0.5rem -0.5rem;
   margin-left: auto;
-  padding-bottom: 0.125em;
   width: 50%;
-}
-
-.SettingsSection button:hover {
-  background: rgba(0,0,0,0.05);
 }
 
 .SettingsSection button:nth-last-child(2) {
