@@ -8,6 +8,11 @@ import UnsplashPhoto from '../UnsplashPhoto';
 import WallpaperSettings from '../WallpaperSettings';
 import Popup from '../Popup';
 
+const fixWidow = (string) => {
+  const nbsp = String.fromCharCode(parseInt('0x00A0', 16));
+  return string.replace(/\s([^\s]*)$/, `${nbsp}$1`);
+}
+
 const unsplash = new Unsplash({
   applicationId: process.env.REACT_APP_UNSPLASH_APPID,
   secret: process.env.REACT_APP_UNSPLASH_SECRET,
@@ -69,6 +74,18 @@ class UnsplashWallpaper extends Component {
     });
   }
 
+  preloadImage(image, errors) {
+    let img = new Image();
+
+    img.onload = () => this.setState({
+      errors: (errors && errors.length) ? errors : null,
+      isLoading: false,
+      image
+    });
+
+    img.src = image.urls.thumb;
+  }
+
   getRandomFeaturedPhoto(
     query = this.props.settings.query,
     featured = this.props.settings.featured
@@ -88,48 +105,39 @@ class UnsplashWallpaper extends Component {
         featured
       })
       .then((res) => {
-        const limit = parseInt(res.headers.get('x-ratelimit-remaining'), 10);
-
-        if (res.ok || res.status === 404) {
-          return res.json();
-        } else if (limit === 0) {
-          return this.getRandomCachedPhoto();
+        if (res.status === 403) {
+          return res.text().then((text) => ({
+            errors: [text]
+          }));
         }
 
-        debugger;
+        return res.json();
       })
-      .then((data) => {
-        if (!data) return;
-
-        if (data.errors) {
-          this.setState({
-            isLoading: false,
-            errors: data.errors
-          });
-
-          return;
+      .then(({ errors, ...data }) => {
+        if (errors) {
+          data = this.getRandomCachedPhoto();
+          errors = [...errors, 'Using Cached Photo'];
+        } else {
+          cachePhoto(data);
         }
 
-        cachePhoto(data);
-        this.preloadImage(data);
+        if (data) {
+          this.preloadImage(data, errors);
+        }
       });
-  }
-
-  preloadImage(image) {
-    let img = new Image();
-
-    img.onload = () => this.setState({
-      isLoading: false,
-      image
-    });
-
-    img.src = image.urls.thumb;
   }
 
   getRandomCachedPhoto() {
     const { cache } = this.props;
-    const rand = Math.floor(Math.random() * cache.length);
-    return cache[rand];
+
+    if (cache.length) {
+      const rand = Math.floor(Math.random() * cache.length);
+      return cache[rand];
+    } else {
+      this.setState({
+        errors: ['Cannot Find Cached Photos']
+      });
+    }
   }
 
   render() {
@@ -143,6 +151,9 @@ class UnsplashWallpaper extends Component {
       errors,
       showErrors
     } = this.state;
+
+    const errorMessage = !!(errors && errors.length) ?
+          fixWidow(errors.join('. ')) + '.' : null;
 
     return (
       <div className="Wallpaper">
@@ -175,19 +186,15 @@ class UnsplashWallpaper extends Component {
           <div className="Wallpaper__settings">
             <WallpaperSettings
                 onToggle={this._handleShowErrors}
-                errors={errors}
+                error={errorMessage}
             />
 
-            {errors && showErrors && (
+            {(errorMessage && showErrors) && (
               <Popup
                   type="error"
                   position="top"
                   alignment="left">
-                {errors.map((err, i) => (
-                  <div key={i}>
-                    {err}
-                  </div>
-                ))}
+                <p>{errorMessage}</p>
               </Popup>
             )}
           </div>
