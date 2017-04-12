@@ -137,22 +137,18 @@ class WallpaperSettings extends Component {
           </Section>
         )}
 
-        <Section>
-          <TextField
-              label="Query"
-              placeholder="nature, animals, etc."
-              onChangeText={this._handleChangeQuery}
-              value={query}
-          />
-        </Section>
+        <TextField
+            label="Query"
+            placeholder="nature, animals, etc."
+            onChangeText={this._handleChangeQuery}
+            value={query}
+        />
 
-        <Section>
-          <ToggleField
-              label="Featured"
-              onChange={this._handleChangeFeatured}
-              value={featured}
-          />
-        </Section>
+        <ToggleField
+            label="Featured"
+            onChange={this._handleChangeFeatured}
+            value={featured}
+        />
 
         {!!isDirty && (
           <Section>

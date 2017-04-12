@@ -17,6 +17,10 @@
   width: 2.5em;
 }
 
+.ToggleField__label {
+  margin-right: 1rem;
+}
+
 .ToggleField__toggle::before {
   background: white;
   border: 1px solid rgba(0,0,0,0.2);

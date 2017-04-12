@@ -1,6 +1,8 @@
 import React, { Component, PropTypes } from 'react';
 import './TextField.css';
 
+import Section from '../SettingsSection';
+
 class TextField extends Component {
   static propTypes = {
     label: PropTypes.string.isRequired,
@@ -39,7 +41,7 @@ class TextField extends Component {
     } = this.props;
 
     return (
-      <div className="TextField">
+      <Section className="TextField">
         <label className="TextField__label">
           {label}
         </label>
@@ -51,7 +53,7 @@ class TextField extends Component {
             placeholder={placeholder}
             value={value}
         />
-      </div>
+      </Section>
     );
   }
 }

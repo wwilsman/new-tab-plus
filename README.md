@@ -7,7 +7,7 @@ A better new tab experience
 - [ ] Group components by function.
 - [ ] Persist cached photos in smaller chunks to fit chrome.storage.sync 8kb
   item limit and 100kb total storage limit.
-- [ ] Bake in settings section component into field components.
+- [x] Bake in settings section component into field components.
 - [x] Attempt to load the next wallpaper before saving settings to prevent
   saving settings that results in an error.
 - [x] Add clear settings button to wallpaper settings.

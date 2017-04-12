@@ -1,6 +1,8 @@
 import React, { Component, PropTypes } from 'react';
 import './ToggleField.css';
 
+import Section from '../SettingsSection';
+
 class ToggleField extends Component {
   static propTypes = {
     label: PropTypes.string.isRequired,
@@ -29,7 +31,7 @@ class ToggleField extends Component {
     ].join(' ');
 
     return (
-      <div className="ToggleField">
+      <Section className="ToggleField">
         <label className="ToggleField__label">
           {label}
         </label>
@@ -38,7 +40,7 @@ class ToggleField extends Component {
             className={toggleClassName}
             onClick={this._handleToggle}
         />
-      </div>
+      </Section>
     );
   }
 }
