@@ -34,8 +34,9 @@ class Popup extends Component {
 
   _handleOutsideClick = (e) => {
     const { onClickOutside } = this.props;
+    const targetInDom = document.body.contains(e.target);
 
-    if (!this._element || !onClickOutside) {
+    if (!this._element || !onClickOutside || !targetInDom) {
       return;
     }
 
