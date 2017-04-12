@@ -19,6 +19,10 @@ div {
   flex-direction: column;
 }
 
+p {
+  line-height: 1.5;
+}
+
 a {
   color: inherit;
   text-decoration: none;
