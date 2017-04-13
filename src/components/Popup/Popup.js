@@ -2,19 +2,17 @@ import React, { Component, PropTypes } from 'react';
 import { findDOMNode } from 'react-dom';
 import './Popup.css';
 
-const popupTypes = ['default', 'error'];
 const positions = ['top', 'right', 'bottom', 'left', 'center'];
 
 class Popup extends Component {
   static propTypes = {
-    type: PropTypes.oneOf(popupTypes),
+    type: PropTypes.oneOf(['error']),
     position: PropTypes.oneOf(positions),
     alignment: PropTypes.oneOf(positions),
     onClickOutside: PropTypes.func
   };
 
   static defaultProps = {
-    type: 'default',
     position: 'center',
     alignment: 'center'
   };
@@ -54,18 +52,20 @@ class Popup extends Component {
       type,
       position,
       alignment,
+      className,
       children
     } = this.props;
 
-    const className = [
+    const rootClassName = [
       'Popup',
-      `Popup--${type}`,
+      !!type && `Popup--${type}`,
       `Popup--pos-${position}`,
       `Popup--align-${alignment}`,
-    ].join(' ');
+      className
+    ].filter(Boolean).join(' ');
 
     return (
-      <div className={className}>
+      <div className={rootClassName}>
         {children}
       </div>
     );

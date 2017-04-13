@@ -3,7 +3,7 @@
   border-radius: 0.25rem;
   box-shadow: 0 0 1rem rgba(0,0,0,0.2);
   font-size: 0.8125rem;
-  padding: 0.25rem 0;
+  padding: 1rem;
   position: absolute;
   width: 17rem;
 }
@@ -19,7 +19,6 @@
   background: red;
   color: white;
   font-size: 0.75rem;
-  padding: 1rem;
 }
 
 .Popup--error::before {

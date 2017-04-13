@@ -73,9 +73,10 @@ class Settings extends Component {
 
         {!!isShown && (
           <Popup
-              position={popupPosition}
+              className="Settings__popup"
+              onClickOutside={this._handleHide}
               alignment={popupAlignment}
-              onClickOutside={this._handleHide}>
+              position={popupPosition}>
             {children}
           </Popup>
         )}

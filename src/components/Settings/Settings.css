@@ -13,6 +13,10 @@
   opacity: 1;
 }
 
+.Settings .Settings__popup {
+  padding: 0.25rem 0;
+}
+
 .Settings__section {
   align-items: center;
   border-bottom: 1px solid rgba(0,0,0,0.1);
