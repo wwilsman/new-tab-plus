@@ -1,8 +1,8 @@
 import { createStore, compose } from 'redux';
 import { getStoredState, persistStore } from 'redux-persist'
 
-import storage from './utils/storage';
-import rootReducer from './reducers';
+import storage from './storage';
+import rootReducer from '../reducers';
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
