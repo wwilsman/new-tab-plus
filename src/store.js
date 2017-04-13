@@ -1,25 +1,25 @@
 import { createStore, compose } from 'redux';
-import { autoRehydrate, persistStore } from 'redux-persist'
-import persistStorage from './utils/persistStorage';
+import { getStoredState, persistStore } from 'redux-persist'
 
+import storage from './utils/storage';
 import rootReducer from './reducers';
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
-const configureStore = (initialState = {}) => {
-  const store = createStore(
-    rootReducer,
-    initialState,
-    composeEnhancers(
-      autoRehydrate()
-    )
-  );
+const configureStore = (callback) => {
+  const config = { storage };
 
-  persistStore(store, {
-    storage: persistStorage
+  getStoredState(config, (err, restoredState) => {
+    const store = createStore(
+      rootReducer,
+      restoredState,
+      composeEnhancers()
+    );
+
+    persistStore(store, config);
+
+    callback(store);
   });
-
-  return store;
 };
 
 export default configureStore;

@@ -1,34 +1,15 @@
-import { REHYDRATE } from 'redux-persist/constants';
-
 const defaultSettings = {
   wallpaper: {
     query: '',
-    featured: true,
-    fetch: false
+    featured: true
   }
 };
 
-const settingsReducer = (state = defaultSettings, action) => {
+const settingsReducer = (
+  state = defaultSettings,
+  action
+) => {
   switch(action.type) {
-    case REHYDRATE:
-      const { settings } = action.payload;
-
-      return settings ? {
-        ...state,
-        ...settings,
-        wallpaper: {
-          ...state.wallpaper,
-          ...settings.wallpaper,
-          fetch: true
-        }
-      } : {
-        ...state,
-        wallpaper: {
-          ...state.wallpaper,
-          fetch: true
-        }
-      };
-
     case 'SAVE_SETTINGS':
       return {
         ...state,

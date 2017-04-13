@@ -25,8 +25,7 @@ class UnsplashWallpaper extends Component {
     cachePhoto: PropTypes.func.isRequired,
     settings: PropTypes.shape({
       query: PropTypes.string.isRequired,
-      featured: PropTypes.bool.isRequired,
-      fetch: PropTypes.bool.isRequired
+      featured: PropTypes.bool.isRequired
     }).isRequired,
     saveSettings: PropTypes.func.isRequired
   };
@@ -39,22 +38,17 @@ class UnsplashWallpaper extends Component {
   };
 
   componentWillMount() {
-    if (this.props.settings.fetch) {
-      this.getRandomFeaturedPhoto();
-    }
+    this.getRandomFeaturedPhoto();
   }
 
   componentWillReceiveProps({ settings }) {
     const {
       query:oldQuery,
-      featured:oldFeatured,
-      fetch:oldFetch
+      featured:oldFeatured
     } = this.props.settings;
 
-    const settingChanged = settings.query !== oldQuery ||
-          settings.featured !== oldFeatured;
-
-    if (settings.fetch && (!oldFetch || settingChanged)) {
+    if (settings.query !== oldQuery ||
+        settings.featured !== oldFeatured) {
       this.getRandomFeaturedPhoto(settings);
     }
   }
@@ -138,7 +132,7 @@ class UnsplashWallpaper extends Component {
           cachePhoto(data);
         }
 
-        if (!!Object.keys(data).length) {
+        if (data && !!Object.keys(data).length) {
           this.preloadImage(data, errors);
         } else {
           this.setState((state) => ({

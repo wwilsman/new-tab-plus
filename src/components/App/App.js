@@ -1,24 +1,20 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Provider } from 'react-redux'
-import './App.css';
-
-import configureStore from '../../store';
 
 import UnsplashWallpaper from '../UnsplashWallpaper';
 import ShortcutGrid from '../ShortcutGrid';
+import './App.css';
 
-class App extends Component {
-  store = configureStore();
+const App = ({ store }) => (
+  <Provider store={store}>
+    <UnsplashWallpaper>
+      <ShortcutGrid/>
+    </UnsplashWallpaper>
+  </Provider>
+);
 
-  render() {
-    return (
-      <Provider store={this.store}>
-        <UnsplashWallpaper>
-          <ShortcutGrid/>
-        </UnsplashWallpaper>
-      </Provider>
-    );
-  }
-}
+App.propTypes = {
+  store: Provider.propTypes.store
+};
 
 export default App;
