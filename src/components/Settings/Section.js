@@ -1,14 +1,14 @@
 import React, { PropTypes } from 'react';
-import './SettingsSection.css';
+import './Settings.css';
 
 const SettingsSection = ({
-  type = 'default',
+  type,
   className,
   children
 }) => (
   <div className={[
-         'SettingsSection',
-         `SettingsSection--${type}`,
+         'Settings__section',
+         !!type && `Settings__section--${type}`,
          className
        ].filter(Boolean).join(' ')}>
     {children}
@@ -16,7 +16,7 @@ const SettingsSection = ({
 );
 
 SettingsSection.propTypes = {
-  type: PropTypes.oneOf(['default', 'error'])
+  type: PropTypes.oneOf(['error'])
 };
 
 export default SettingsSection;

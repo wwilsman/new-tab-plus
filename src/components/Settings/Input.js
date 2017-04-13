@@ -1,9 +1,9 @@
 import React, { Component, PropTypes } from 'react';
-import './TextField.css';
 
-import Section from '../SettingsSection';
+import Section from './Section';
+import './Settings.css';
 
-class TextField extends Component {
+class SettingsInput extends Component {
   static propTypes = {
     label: PropTypes.string.isRequired,
     placeholder: PropTypes.string,
@@ -41,13 +41,13 @@ class TextField extends Component {
     } = this.props;
 
     return (
-      <Section className="TextField">
-        <label className="TextField__label">
+      <Section>
+        <label className="Settings__label">
           {label}
         </label>
 
         <input
-            className="TextField__input"
+            className="Settings__input-field"
             onChange={this._handleChange}
             onKeyDown={this._handleKeyDown}
             placeholder={placeholder}
@@ -58,4 +58,4 @@ class TextField extends Component {
   }
 }
 
-export default TextField;
+export default SettingsInput;

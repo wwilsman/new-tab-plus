@@ -1,9 +1,9 @@
 import React, { Component, PropTypes } from 'react';
-import './ToggleField.css';
 
-import Section from '../SettingsSection';
+import Section from './Section';
+import './Settings.css';
 
-class ToggleField extends Component {
+class SettingsToggle extends Component {
   static propTypes = {
     label: PropTypes.string.isRequired,
     value: PropTypes.bool.isRequired,
@@ -26,13 +26,13 @@ class ToggleField extends Component {
     } = this.props;
 
     const toggleClassName = [
-      'ToggleField__toggle',
-      `ToggleField__toggle--${value ? 'enabled' : 'disabled'}`,
+      'Settings__toggle-field',
+      `Settings__toggle-field--${value ? 'on' : 'off'}`,
     ].join(' ');
 
     return (
-      <Section className="ToggleField">
-        <label className="ToggleField__label">
+      <Section>
+        <label className="Settings__label">
           {label}
         </label>
 
@@ -45,4 +45,4 @@ class ToggleField extends Component {
   }
 }
 
-export default ToggleField;
+export default SettingsToggle;

@@ -1,8 +1,8 @@
 import React, { Component, PropTypes } from 'react';
-import './Settings.css';
 
 import Icon from '../Icon';
 import Popup from '../Popup';
+import './Settings.css';
 
 class Settings extends Component {
   static propTypes = {

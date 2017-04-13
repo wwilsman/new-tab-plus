@@ -1,11 +1,12 @@
 import React, { Component, PropTypes } from 'react';
 
-import Button from '../Button';
 import Icon from '../Icon';
-import Settings from '../Settings';
-import Section from '../SettingsSection';
-import TextField from '../TextField';
-import ToggleField from '../ToggleField';
+import Settings, {
+  Button,
+  Input,
+  Section,
+  Toggle
+} from '../Settings';
 
 class WallpaperSettings extends Component {
   static propTypes = {
@@ -137,14 +138,14 @@ class WallpaperSettings extends Component {
           </Section>
         )}
 
-        <TextField
+        <Input
             label="Query"
             placeholder="nature, animals, etc."
             onChangeText={this._handleChangeQuery}
             value={query}
         />
 
-        <ToggleField
+        <Toggle
             label="Featured"
             onChange={this._handleChangeFeatured}
             value={featured}
