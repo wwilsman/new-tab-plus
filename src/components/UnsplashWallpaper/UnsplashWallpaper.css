@@ -5,28 +5,28 @@
 }
 
 .Wallpaper__container,
-.Wallpaper__image {
+.Wallpaper__photo {
   height: 100%;
   position: absolute;
   width: 100%;
 }
 
-.Wallpaper__image.Wallpaper__image-enter {
+.Wallpaper__image.Wallpaper__photo-enter {
   opacity: 0;
   z-index: 10;
 }
 
-.Wallpaper__image.Wallpaper__image-enter-active {
+.Wallpaper__photo.Wallpaper__photo-enter-active {
   opacity: 1;
   transition: 0.3s ease-out;
 }
 
-.Wallpaper__image.Wallpaper__image-leave {
+.Wallpaper__photo.Wallpaper__photo-leave {
   opacity: 1;
   z-index: 1;
 }
 
-.Wallpaper__image.Wallpaper__image-leave-active {
+.Wallpaper__photo.Wallpaper__photo-leave-active {
   opacity: 0;
   transition: 0.3s ease-out;
 }
@@ -36,19 +36,26 @@
 }
 
 .Wallpaper__actions {
-  bottom: 1rem;
+  bottom: 2rem;
+  color: rgba(255,255,255,0.6);
   flex-direction: row;
-  left: 1rem;
+  height: 0;
+  padding: 0 1rem;
   position: absolute;
   top: auto;
+  width: 100%;
   z-index: 10;
+}
+
+.Wallpaper__actions > a:hover,
+.Wallpaper__actions > button:hover {
+  color: rgba(255,255,255,1);
 }
 
 .Wallpaper__refresh {
   margin-right: 0.25rem;
-  color: rgba(255,255,255,0.8);
 }
 
-.Wallpaper__refresh:hover {
-  color: rgba(255,255,255,1);
+.Wallpaper__download {
+  margin-left: auto;
 }

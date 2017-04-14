@@ -22,11 +22,12 @@
   transition: opacity 1s ease-out;
 }
 
-.Photo__info {
+.Photo__caption {
   background: linear-gradient(to top, rgba(0,0,0,0.4), rgba(0,0,0,0));
   bottom: 0;
   color: rgba(255,255,255,0.8);
   height: 4rem;
+  font-size: 0.75rem;
   opacity: 0.6;
   padding: 2rem 0 1rem;
   position: absolute;
@@ -37,25 +38,10 @@
   z-index: 10;
 }
 
-.Photo__info:hover {
+.Photo__caption:hover {
   opacity: 1;
 }
 
-.Photo__info a:hover {
+.Photo__caption a:hover {
   color: rgba(255,255,255,1);
-}
-
-.Photo__credit {
-  margin-top: 0.125rem;
-  font-size: 0.75rem;
-}
-
-.Photo__download {
-  left: auto;
-  margin-top: 0.5rem;
-  position: absolute;
-  right: 1rem;
-  top: 50%;
-  transform: translateY(-50%);
-  z-index: 10;
 }

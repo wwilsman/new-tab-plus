@@ -4,7 +4,7 @@ import Unsplash from 'unsplash-js';
 import './UnsplashWallpaper.css';
 
 import Icon from '../Icon';
-import UnsplashPhoto from '../UnsplashPhoto';
+import Photo from '../Photo';
 import WallpaperSettings from '../WallpaperSettings';
 import Popup from '../Popup';
 
@@ -180,15 +180,22 @@ class UnsplashWallpaper extends Component {
       <div className="Wallpaper">
         <ReactCSSTransitionGroup
             className="Wallpaper__container"
-            transitionName="Wallpaper__image"
+            transitionName="Wallpaper__photo"
             transitionEnterTimeout={300}
             transitionLeaveTimeout={300}>
           {!!image && (
-             <UnsplashPhoto
+             <Photo
                  key={image.id}
-                 className="Wallpaper__image"
-                 {...image}
-             />
+                 className="Wallpaper__photo"
+                 onLoad={this._handlePhotoLoaded}
+                 thumbnail={image.urls.thumb}
+                 source={image.urls.full}>
+               <span>
+                 <a href={image.user.links.html}>{image.user.name}</a>
+                 <span>{'\u00A0\u00A0/\u00A0\u00A0'}</span>
+                 <a href="https://unsplash.com/">Unsplash</a>
+               </span>
+             </Photo>
            )}
         </ReactCSSTransitionGroup>
 
@@ -221,6 +228,12 @@ class UnsplashWallpaper extends Component {
               </Popup>
             )}
           </div>
+
+          {!!image && (
+            <a className="Wallpaper__download" href={image.links.download} download>
+              <Icon name="arrow-down" fixed/>
+            </a>
+          )}
         </div>
       </div>
     );
