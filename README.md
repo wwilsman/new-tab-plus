@@ -8,6 +8,7 @@ A better new tab experience
   chrome.storage.sync 8kb item limit and 100kb total storage limit.
 - [ ] **Wallpaper**: Store photo views in another key on the state so
   they're retained after additional photo requests.
+- [ ] **Wallpaper**: Keep showing the thumbnail for a photo component after aborting.
 - [ ] **Shortcuts**: Create upload field component for shortcut icons.
 - [ ] **Shortcuts**: Create settings page component to list predetermined shortcuts.
 - [ ] **Shortcuts**: Create components that interface with the browsers
