@@ -5,7 +5,7 @@ const defaultSettings = {
   }
 };
 
-const settingsReducer = (
+export const reducer = (
   state = defaultSettings,
   action
 ) => {
@@ -23,5 +23,3 @@ const settingsReducer = (
       return state;
   }
 };
-
-export default settingsReducer;

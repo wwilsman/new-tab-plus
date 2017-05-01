@@ -1,15 +1,15 @@
 import React from 'react';
 import { Provider } from 'react-redux'
 
-import UnsplashWallpaper from '../UnsplashWallpaper';
+import Wallpaper from '../Wallpaper';
 import ShortcutGrid from '../ShortcutGrid';
 import './App.css';
 
 const App = ({ store }) => (
   <Provider store={store}>
-    <UnsplashWallpaper>
+    <Wallpaper>
       <ShortcutGrid/>
-    </UnsplashWallpaper>
+    </Wallpaper>
   </Provider>
 );
 

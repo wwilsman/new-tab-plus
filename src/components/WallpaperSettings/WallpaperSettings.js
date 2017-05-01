@@ -14,16 +14,16 @@ class WallpaperSettings extends Component {
       query: PropTypes.string.isRequired,
       featured: PropTypes.bool.isRequired
     }).isRequired,
-    onTrySettings: PropTypes.func.isRequired,
+    onSave: PropTypes.func.isRequired,
     onToggle: Settings.propTypes.onToggle,
+    isLoading: PropTypes.bool,
     error: PropTypes.string
   };
 
   state = {
     query: this.props.settings.query,
     featured: this.props.settings.featured,
-    isLoading: false,
-    errors: null
+    error: null
   };
 
   componentWillReceiveProps(props) {
@@ -57,7 +57,7 @@ class WallpaperSettings extends Component {
     } = this.props.settings
 
     this.setState({
-      errors: null,
+      error: null,
       featured,
       query
     });
@@ -70,61 +70,39 @@ class WallpaperSettings extends Component {
     } = this.state;
 
     const {
-      onTrySettings
+      onSave
     } = this.props;
 
-    this.setState({
-      isLoading: true
-    });
-
-    onTrySettings({
-      query,
-      featured
-    }, (errors) => {
-      if (!errors && this.popup) {
+    onSave({ query, featured })
+      .then(() => {
         this.popup.toggle(false);
-      } else if (errors) {
-        this.setState({ errors });
-      }
-
-      this.setState({
-        isLoading: false
+        this.setState({ error: null });
+      })
+      .catch((error) => {
+        this.setState({ error });
       });
-    });
   }
 
   _handleToggle = (isVisible) => {
-    const {
-      onToggle
-    } = this.props;
-
-    if (!isVisible) {
-      this._handleReset();
-    }
-
-    if (onToggle) {
-      onToggle(isVisible);
+    if (this.props.onToggle) {
+      this.props.onToggle(isVisible);
     }
   }
 
   render() {
     const {
       query,
-      featured,
-      isLoading,
-      errors
+      featured
     } = this.state;
 
     const {
-      query:ogQuery,
-      featured:ogFeatured
-    } = this.props.settings;
+      settings,
+      isLoading
+    } = this.props;
 
-    const isDirty = query !== ogQuery ||
-          featured !== ogFeatured;
-
-    const error = (errors && errors.length) ?
-          errors.join(' ') : this.props.error;
+    const error = this.state.error || this.props.error;
+    const isDirty = query !== settings.query ||
+          featured !== settings.featured;
 
     return (
       <Settings

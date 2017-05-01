@@ -6,9 +6,8 @@ A better new tab experience
 
 - [ ] **Wallpaper**: Persist cached photos in smaller chunks to fit
   chrome.storage.sync 8kb item limit and 100kb total storage limit.
-- [ ] **Wallpaper**: Retrieve larger set of photos from single request and
-  create a backlog of photos to load from. Subsequent calls to the API should
-  only be preformed if the backlog is empty.
+- [ ] **Wallpaper**: Store photo views in another key on the state so
+  they're retained after additional photo requests.
 - [ ] **Shortcuts**: Create upload field component for shortcut icons.
 - [ ] **Shortcuts**: Create settings page component to list predetermined shortcuts.
 - [ ] **Shortcuts**: Create components that interface with the browsers

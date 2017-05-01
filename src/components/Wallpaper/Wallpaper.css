@@ -11,7 +11,7 @@
   width: 100%;
 }
 
-.Wallpaper__image.Wallpaper__photo-enter {
+.Wallpaper__photo.Wallpaper__photo-enter {
   opacity: 0;
   z-index: 10;
 }

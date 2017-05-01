@@ -4,28 +4,15 @@ import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import FirstChild from '../FirstChild';
 import './Photo.css';
 
-function preloadImage(url) {
-  return new Promise((resolve, reject) => {
-    let img = new Image();
-
-    const finish = (fn) => {
-      return () => {
-        img = null;
-        fn();
-      }
-    }
-
-    img.onload = finish(resolve);
-    img.onerror = finish(reject);
-    img.src = url;
-  });
-}
-
 class Photo extends Component {
   static propTypes = {
     thumbnail: PropTypes.string.isRequired,
     source: PropTypes.string.isRequired,
-    onLoad: PropTypes.func
+    loadSource: PropTypes.bool
+  };
+
+  static defaultProps = {
+    loadSource: true
   };
 
   state = {
@@ -33,58 +20,57 @@ class Photo extends Component {
   };
 
   componentDidMount() {
-    this.load();
+    if (this.props.loadSource) {
+      this.load();
+    }
   }
 
   componentWillUnmount() {
+    this.abort && this.abort();
     this.isUnmounted = true;
   }
 
   componentWillReceiveProps(props) {
-    const {
-      thumbnail,
-      source,
-      onLoad
-    } = props;
+    const { loadSource, source } = props;
+    const { source:oldSource } = this.props;
 
-    const {
-      thumbnail:oldThumb,
-      source:oldSource
-    } = this.props;
-
-    if (thumbnail !== oldThumb || source !== oldSource) {
-      this.load(thumbnail, source, onLoad);
+    if (loadSource && source !== oldSource) {
+      this.load(source);
+    } else if (!loadSource && this.abort) {
+      this.abort();
     }
   }
 
   load(
-    thumbnail = this.props.thumbnail,
-    source = this.props.source,
-    onLoad = this.props.onLoad
+    source = this.props.source
   ) {
-    this.setState({
-      isLoading: true
-    });
+    this.abort && this.abort();
+    if (!source) return;
 
-    preloadImage(thumbnail).then(() => {
-      if (!this.isUnmounted) {
-        if (onLoad) {
-          onLoad(thumbnail);
-        }
+    let img = new Image();
 
-        return preloadImage(source);
-      }
-    }).then(() => {
+    const finish = () => {
+      delete this.abort;
+      img = null;
+
       if (!this.isUnmounted) {
         this.setState({
           isLoading: false
         });
-
-        if (onLoad) {
-          onLoad(source);
-        }
       }
+    };
+
+    this.abort = () => {
+      img.src = '';
+    };
+
+    this.setState({
+      isLoading: true
     });
+
+    img.onerror = finish;
+    img.onload = finish;
+    img.src = source;
   }
 
   render() {

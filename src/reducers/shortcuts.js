@@ -1,4 +1,14 @@
-const shortcutReducer = (state = {}, action) => {
+const initialShortcutState = {
+  id: 0,
+  name: 'New Shortcut',
+  icon: '',
+  url: '#'
+};
+
+const shortcutReducer = (
+  state = initialShortcutState,
+  action
+) => {
   switch (action.type) {
     case 'NEW_SHORTCUT':
       return {
@@ -12,14 +22,14 @@ const shortcutReducer = (state = {}, action) => {
       return {
         ...state,
         name: action.shortcut.name
-      }
+      };
 
     default:
       return state;
   }
-}
+};
 
-const shortcutsReducer = (state = [], action) => {
+export const reducer = (state = [], action) => {
   switch (action.type) {
     case 'NEW_SHORTCUT':
       return [
@@ -46,5 +56,3 @@ const shortcutsReducer = (state = [], action) => {
       return state;
   }
 };
-
-export default shortcutsReducer;

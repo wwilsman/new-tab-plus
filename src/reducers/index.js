@@ -1,13 +1,24 @@
 import { combineReducers } from 'redux';
 
-import photosReducer from './photos';
-import shortcutsReducer from './shortcuts';
-import settingsReducer from './settings';
+import {
+  reducer as photos,
+  transform as photosTransform
+} from './photos';
 
-const rootReducer = combineReducers({
-  photos: photosReducer,
-  shortcuts: shortcutsReducer,
-  settings: settingsReducer
+import {
+  reducer as shortcuts
+} from './shortcuts';
+
+import {
+  reducer as settings
+} from './settings';
+
+export const reducer = combineReducers({
+  photos,
+  shortcuts,
+  settings
 });
 
-export default rootReducer;
+export const transforms = [
+  photosTransform
+];
