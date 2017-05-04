@@ -16,7 +16,8 @@ class Photo extends Component {
   };
 
   state = {
-    isLoading: true
+    isLoading: true,
+    didError: false
   };
 
   componentDidMount() {
@@ -48,6 +49,7 @@ class Photo extends Component {
     if (!source) return;
 
     let img = new Image();
+    let didError = false;
 
     const finish = () => {
       delete this.abort;
@@ -55,21 +57,26 @@ class Photo extends Component {
 
       if (!this.isUnmounted) {
         this.setState({
-          isLoading: false
+          isLoading: false,
+          didError
         });
       }
     };
 
-    this.abort = () => {
+    const error = () => {
+      didError = true;
       img.src = '';
+      finish();
     };
+
+    this.abort = error;
+    img.onerror = error;
+    img.onload = finish;
 
     this.setState({
       isLoading: true
     });
 
-    img.onerror = finish;
-    img.onload = finish;
     img.src = source;
   }
 
@@ -82,7 +89,8 @@ class Photo extends Component {
     } = this.props;
 
     const {
-      isLoading
+      isLoading,
+      didError
     } = this.state;
 
     return (
@@ -96,7 +104,7 @@ class Photo extends Component {
             transitionName="Photo__thumb"
             transitionEnter={false}
             transitionLeaveTimeout={1000}>
-          {!!isLoading && (
+          {(!!isLoading || !!didError) && (
              <div className="Photo__thumb" style={{
                backgroundImage: `url('${thumbnail}')`
              }}/>
