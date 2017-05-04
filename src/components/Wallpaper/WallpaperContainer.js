@@ -11,18 +11,14 @@ const WallpaperContainer = connect(
     isLoading: state.photos.loading,
     error: state.photos.error || null
   }),
-  (dispatch) => ({
-    fetch: (settings) =>
-      dispatch(fetchPhotos(settings)),
+  {
+    fetch: fetchPhotos,
     saveSettings: (settings) =>
-      dispatch(fetchPhotos(settings, true)).then(() => (
-        dispatch(saveSettings('wallpaper', settings))
-      )),
-    viewPhoto: (id) =>
-      dispatch(viewPhoto(id))
-  }), null, {
-    pure: false
-  }
+      saveSettings('wallpaper', settings),
+    viewPhoto
+  },
+  null,
+  { pure: false }
 )(Wallpaper);
 
 export default WallpaperContainer;

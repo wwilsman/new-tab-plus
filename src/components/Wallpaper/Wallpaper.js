@@ -1,11 +1,11 @@
 import React, { Component, PropTypes } from 'react';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
-import './Wallpaper.css';
 
 import Icon from '../Icon';
 import Photo from '../Photo';
 import WallpaperSettings from '../WallpaperSettings';
 import Popup from '../Popup';
+import './Wallpaper.css';
 
 class Wallpaper extends Component {
   static propTypes = {
@@ -53,8 +53,16 @@ class Wallpaper extends Component {
       });
     }
 
-    if (settings !== oldSettings || this.needsRefresh) {
+    const needsFetch = settings.query !== oldSettings.query ||
+          settings.featured !== oldSettings.featured;
+
+    if (photos.length && this.needsRefresh) {
+      this.needsRefresh = false;
       this.showRandomPhoto(photos, settings);
+    } else if (needsFetch) {
+      this.props.fetch(settings).then((newPhotos) => {
+        this.showRandomPhoto(newPhotos, settings);
+      });
     }
   }
 
@@ -68,6 +76,26 @@ class Wallpaper extends Component {
     });
   }
 
+  _handleSaveSettings = (settings) => {
+    const {
+      fetch,
+      saveSettings,
+      settings:oldSettings
+    } = this.props;
+
+    if (settings.query !== oldSettings.query ||
+        settings.featured !== oldSettings.featured) {
+      return fetch(settings, true).then(() => {
+        saveSettings(settings);
+      });
+
+    } else if (settings.viewTolerance !== oldSettings.viewTolerance) {
+      return saveSettings(settings);
+    }
+
+    return Promise.resolve();
+  }
+
   showRandomPhoto(
     photos = this.props.photos,
     settings = this.props.settings
@@ -75,6 +103,8 @@ class Wallpaper extends Component {
     let viewCount = 0;
     let viewTolerance = 1; // this should be a setting
     let filtered = [];
+
+    if (this.needsRefresh) return;
 
     const hasLowViews = (photo) => {
       return photo.viewed <= viewCount;
@@ -129,7 +159,6 @@ class Wallpaper extends Component {
   render() {
     const {
       settings,
-      saveSettings,
       children
     } = this.props;
 
@@ -177,7 +206,7 @@ class Wallpaper extends Component {
 
           <div className="Wallpaper__settings">
             <WallpaperSettings
-                onSave={saveSettings}
+                onSave={this._handleSaveSettings}
                 onToggle={this._handleShowError}
                 isLoading={isLoading}
                 settings={settings}
