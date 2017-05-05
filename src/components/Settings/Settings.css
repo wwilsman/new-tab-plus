@@ -85,6 +85,41 @@
   right: -1px;
 }
 
+.Settings__stepper-field {
+  flex-direction: row;
+}
+
+.Settings__stepper-field__value {
+  width: 2.5rem;
+  text-align: center;
+}
+
+.Settings__stepper-field__down,
+.Settings__stepper-field__up {
+  background: center no-repeat / 0.5rem;
+  width: 1rem;
+}
+
+.Settings__stepper-field__down {
+  background-image: url('data:image/svg+xml;utf8,\
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 10">\
+      <path d="M0,2L5,7L10,2" fill="none" stroke="%236666CC" stroke-width="2"/>\
+    </svg>')
+}
+
+.Settings__stepper-field__up {
+  background-image: url('data:image/svg+xml;utf8,\
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 10">\
+      <path d="M0,7L5,2L10,7" fill="none" stroke="%236666CC" stroke-width="2"/>\
+    </svg>')
+}
+
+.Settings__stepper-field__down.Settings__stepper-field--disabled,
+.Settings__stepper-field__up.Settings__stepper-field--disabled {
+  cursor: default;
+  opacity: 0.2;
+}
+
 .Settings__button {
   background: rgba(0,0,0,0.1);
   border: 1px solid;
