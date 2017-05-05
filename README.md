@@ -5,12 +5,11 @@ A better new tab experience
 ## TODO
 
 - [ ] **Shortcuts**: Create upload field component for shortcut icons.
+- [ ] **Shortcuts**: Add ability to create folders that can hold other shortcuts.
 - [ ] **Shortcuts**: Create settings page component to list predetermined shortcuts.
-- [ ] **Shortcuts**: Create components that interface with the browsers
-  bookmarks and apps.
-- [ ] **Shortcuts**: Implement click-and-drag functionality to reorder and
-  delete shortcuts.
-- [ ] **Future**: Create weather-clock component and implement some settings for it.
+- [ ] **Shortcuts**: Create components that interface with bookmarks and apps.
+- [ ] **Shortcuts**: Implement click-and-drag to reorder and delete shortcuts.
+- [ ] **Future**: Other widgets?
 
 ## Installation
 
