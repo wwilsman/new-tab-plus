@@ -10,7 +10,8 @@ import {
 } from './shortcuts';
 
 import {
-  reducer as settings
+  reducer as settings,
+  transform as settingsTransform
 } from './settings';
 
 export const reducer = combineReducers({
@@ -20,5 +21,6 @@ export const reducer = combineReducers({
 });
 
 export const transforms = [
-  photosTransform
+  photosTransform,
+  settingsTransform
 ];

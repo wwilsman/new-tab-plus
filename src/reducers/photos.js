@@ -1,4 +1,5 @@
 import { createTransform } from 'redux-persist';
+import withDefaults from '../utils/with-defaults';
 
 const initialPhotoState = {
   id: '',
@@ -48,10 +49,10 @@ export const transform = createTransform(
   (inbound) => ({
     data: inbound.data
   }),
-  (outbound) => ({
-    ...initialPhotosState,
-    data: outbound.data
-  }), {
+  (outbound) => withDefaults(
+    { data: outbound.data },
+    initialPhotosState
+  ), {
     whitelist: ['photos']
   }
 );
