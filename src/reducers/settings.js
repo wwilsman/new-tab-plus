@@ -4,7 +4,8 @@ import withDefaults from '../utils/with-defaults';
 const defaultSettings = {
   wallpaper: {
     query: '',
-    featured: true
+    featured: true,
+    viewTolerance: 1
   }
 };
 

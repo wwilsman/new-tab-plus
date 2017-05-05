@@ -5,6 +5,7 @@ import Settings, {
   Button,
   Input,
   Section,
+  Stepper,
   Toggle
 } from '../Settings';
 
@@ -12,7 +13,8 @@ class WallpaperSettings extends Component {
   static propTypes = {
     settings: PropTypes.shape({
       query: PropTypes.string.isRequired,
-      featured: PropTypes.bool.isRequired
+      featured: PropTypes.bool.isRequired,
+      viewTolerance: PropTypes.number.isRequired
     }).isRequired,
     onSave: PropTypes.func.isRequired,
     onToggle: Settings.propTypes.onToggle,
@@ -23,22 +25,31 @@ class WallpaperSettings extends Component {
   state = {
     query: this.props.settings.query,
     featured: this.props.settings.featured,
+    viewTolerance: this.props.settings.viewTolerance,
     error: null
   };
 
   componentWillReceiveProps(props) {
     const {
       query,
-      featured
+      featured,
+      viewTolerance
     } = props.settings;
 
     const {
       query:oldQuery,
-      featured:oldFeatured
+      featured:oldFeatured,
+      viewTolerance:oldTolerance
     } = this.props.settings;
 
-    if (query !== oldQuery || featured !== oldFeatured) {
-      this.setState({ featured, query });
+    if (query !== oldQuery ||
+        featured !== oldFeatured ||
+        viewTolerance !== oldTolerance) {
+      this.setState({
+        query,
+        featured,
+        viewTolerance
+      });
     }
   }
 
@@ -50,14 +61,20 @@ class WallpaperSettings extends Component {
     this.setState({ featured });
   }
 
+  _handleChangeTolerance = (viewTolerance) => {
+    this.setState({ viewTolerance });
+  }
+
   _handleReset = () => {
     const {
       query,
-      featured
-    } = this.props.settings
+      featured,
+      viewTolerance
+    } = this.props.settings;
 
     this.setState({
       error: null,
+      viewTolerance,
       featured,
       query
     });
@@ -66,21 +83,24 @@ class WallpaperSettings extends Component {
   _handleSave = () => {
     const {
       query,
-      featured
+      featured,
+      viewTolerance
     } = this.state;
 
     const {
       onSave
     } = this.props;
 
-    onSave({ query, featured })
-      .then(() => {
-        this.popup.toggle(false);
-        this.setState({ error: null });
-      })
-      .catch((error) => {
-        this.setState({ error });
-      });
+    onSave({
+      query,
+      featured,
+      viewTolerance
+    }).then(() => {
+      this.popup.toggle(false);
+      this.setState({ error: null });
+    }).catch((error) => {
+      this.setState({ error });
+    });
   }
 
   _handleToggle = (isVisible) => {
@@ -92,7 +112,8 @@ class WallpaperSettings extends Component {
   render() {
     const {
       query,
-      featured
+      featured,
+      viewTolerance
     } = this.state;
 
     const {
@@ -102,7 +123,8 @@ class WallpaperSettings extends Component {
 
     const error = this.state.error || this.props.error;
     const isDirty = query !== settings.query ||
-          featured !== settings.featured;
+          featured !== settings.featured ||
+          viewTolerance !== settings.viewTolerance;
 
     return (
       <Settings
@@ -127,6 +149,13 @@ class WallpaperSettings extends Component {
             label="Featured"
             onChange={this._handleChangeFeatured}
             value={featured}
+        />
+
+        <Stepper
+            label="View Tolerance"
+            onChange={this._handleChangeTolerance}
+            value={viewTolerance}
+            min={1}
         />
 
         {!!isDirty && (

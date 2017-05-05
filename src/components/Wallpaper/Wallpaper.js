@@ -13,7 +13,8 @@ class Wallpaper extends Component {
     fetch: PropTypes.func.isRequired,
     settings: PropTypes.shape({
       query: PropTypes.string.isRequired,
-      featured: PropTypes.bool.isRequired
+      featured: PropTypes.bool.isRequired,
+      viewTolerance: PropTypes.number.isRequired
     }).isRequired,
     saveSettings: PropTypes.func.isRequired,
     viewPhoto: PropTypes.func.isRequired,
@@ -90,7 +91,7 @@ class Wallpaper extends Component {
       });
 
     } else if (settings.viewTolerance !== oldSettings.viewTolerance) {
-      return saveSettings(settings);
+      return Promise.resolve(saveSettings(settings));
     }
 
     return Promise.resolve();
@@ -100,8 +101,8 @@ class Wallpaper extends Component {
     photos = this.props.photos,
     settings = this.props.settings
   ) {
+    let { viewTolerance } = settings;
     let viewCount = 0;
-    let viewTolerance = 1; // this should be a setting
     let filtered = [];
 
     if (this.needsRefresh) return;
