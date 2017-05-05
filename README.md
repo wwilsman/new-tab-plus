@@ -4,8 +4,6 @@ A better new tab experience
 
 ## TODO
 
-- [ ] **Wallpaper**: Persist cached photos in smaller chunks to fit
-  chrome.storage.sync 8kb item limit and 100kb total storage limit.
 - [ ] **Shortcuts**: Create upload field component for shortcut icons.
 - [ ] **Shortcuts**: Create settings page component to list predetermined shortcuts.
 - [ ] **Shortcuts**: Create components that interface with the browsers
