@@ -129,7 +129,7 @@ class WallpaperSettings extends Component {
 
     return (
       <Settings
-          ref={(s) => this.popup = s}
+          ref={(ref) => this.popup = ref}
           onToggle={this._handleToggle}
           popupPosition="top"
           popupAlignment="left">
