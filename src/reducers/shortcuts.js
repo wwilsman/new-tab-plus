@@ -10,7 +10,7 @@ const shortcutReducer = (
   action
 ) => {
   switch (action.type) {
-    case 'NEW_SHORTCUT':
+    case 'CREATE_SHORTCUT':
       return {
         id: Date.now(),
         name: action.shortcut.name,
@@ -31,7 +31,7 @@ const shortcutReducer = (
 
 export const reducer = (state = [], action) => {
   switch (action.type) {
-    case 'NEW_SHORTCUT':
+    case 'CREATE_SHORTCUT':
       return [
         ...state,
         shortcutReducer(null, action)
@@ -51,6 +51,15 @@ export const reducer = (state = [], action) => {
         shortcut.id === action.shortcut.id ?
         shortcutReducer(shortcut, action) :
         shortcut);
+
+    case 'REORDER_SHORTCUT':
+      const index = state.findIndex((shortcut) =>
+        shortcut.id === action.shortcut.id);
+
+      state = [...state];
+      const shortcut = state.splice(index, 1)[0];
+      state.splice(action.shortcut.index, 0, shortcut);
+      return state;
 
     default:
       return state;

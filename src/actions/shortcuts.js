@@ -1,11 +1,27 @@
-export const newShortcut = (name, url, icon) => {
-  return { type: 'NEW_SHORTCUT', shortcut: { name, icon, url } }
-}
+export const createShortcut = (shortcut) => ({
+  type: 'CREATE_SHORTCUT',
+  shortcut
+});
 
-export const deleteShortcut = (id) => {
-  return { type: 'DELETE_SHORTCUT', shortcut: { id } }
-}
+export const deleteShortcut = (id) => ({
+  type: 'DELETE_SHORTCUT',
+  shortcut: {
+    id
+  }
+});
 
-export const renameShortcut = (id, name) => {
-  return { type: 'RENAME_SHORTCUT', shortcut: { id, name } }
-}
+export const renameShortcut = (id, name) => ({
+  type: 'RENAME_SHORTCUT',
+  shortcut: {
+    id,
+    name
+  }
+});
+
+export const reorderShortcut = (id, index) => ({
+  type: 'REORDER_SHORTCUT',
+  shortcut: {
+    index,
+    id
+  }
+});
