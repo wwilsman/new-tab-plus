@@ -4,6 +4,7 @@ import Section from './Section';
 import Settings from './Settings';
 import Stepper from './Stepper';
 import Toggle from './Toggle';
+import Upload from './Upload';
 
 export default Settings;
 
@@ -13,4 +14,5 @@ export {
   Section,
   Stepper,
   Toggle,
+  Upload
 };

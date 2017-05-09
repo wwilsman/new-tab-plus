@@ -120,6 +120,36 @@
   opacity: 0.2;
 }
 
+.Settings__upload-field {
+  cursor: pointer;
+}
+
+.Settings__upload-field__text {
+  color: #6666CC;
+  line-height: 1rem;
+  opacity: 0.5;
+}
+
+.Settings__upload-field__text:hover {
+  opacity: 1;
+}
+
+.Settings__upload-field__input {
+  height: 1px;
+  opacity: 0.01;
+  position: absolute;
+  width: 1px;
+}
+
+.Settings__upload-field canvas {
+  height: 5em;
+  width: 5em;
+}
+
+.Settings__upload-field--no-preview canvas {
+  display: none;
+}
+
 .Settings__button {
   background: rgba(0,0,0,0.1);
   border: 1px solid;
