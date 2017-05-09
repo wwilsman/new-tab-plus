@@ -5,10 +5,12 @@ import './Settings.css';
 const SettingsSection = ({
   type,
   className,
+  alignItems,
   children
 }) => (
   <div className={[
          'Settings__section',
+         !!alignItems && `Settings__section--align-${alignItems}`,
          !!type && `Settings__section--${type}`,
          className
        ].filter(Boolean).join(' ')}>
@@ -17,7 +19,8 @@ const SettingsSection = ({
 );
 
 SettingsSection.propTypes = {
-  type: PropTypes.oneOf(['error'])
+  type: PropTypes.oneOf(['error']),
+  alignItems: PropTypes.oneOf(['start', 'end'])
 };
 
 export default SettingsSection;

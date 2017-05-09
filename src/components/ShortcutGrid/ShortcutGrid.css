@@ -21,18 +21,24 @@
 .ShortcutGrid .Settings {
   display: none;
   left: auto;
-  margin-left: 0.5rem;
   position: absolute;
   right: 0;
 }
 
-.ShortcutGrid:hover .Settings,
-.ShortcutGrid .Settings--is-shown,
-.ShortcutGrid--is-empty .Settings {
+.ShortcutGrid .Settings--is-shown {
+  display: block;
+  margin-right: calc(-9rem / 14); /* half fontawesome fixed width */
+  margin-top: -0.5rem;
+  right: 50%;
+  top: 50%;
+}
+
+.ShortcutGrid:hover .Settings {
   display: block;
 }
 
 .ShortcutGrid--is-empty .Settings {
+  display: block;
   margin: 0.5rem;
   position: relative;
 }

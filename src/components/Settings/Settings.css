@@ -42,12 +42,21 @@
   border-top-right-radius: inherit;
 }
 
+.Settings__section--align-start {
+  align-items: flex-start;
+}
+
+.Settings__section--align-end {
+  align-items: flex-end;
+}
+
 .Settings__section .Button:last-child {
   margin-left: auto;
 }
 
 .Settings__label {
   margin-right: 1rem;
+  line-height: 1rem;
 }
 
 .Settings__input-field {
