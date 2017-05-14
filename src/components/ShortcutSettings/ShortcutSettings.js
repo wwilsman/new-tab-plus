@@ -87,8 +87,6 @@ class ShortcutSettings extends Component {
     return (
       <Settings
           ref={(ref) => this.popup = ref}
-          popupPosition="center"
-          popupAlignment="center"
           toggleIcon="plus">
         <Upload
             label="Icon"
