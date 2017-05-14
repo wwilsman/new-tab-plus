@@ -5,7 +5,7 @@ A better new tab experience
 ## TODO
 
 - [ ] **Wallpaper**: Create tooltips for settings fields.
-- [ ] **Shortcuts**: Create upload field component for shortcut icons.
+- [ ] **Shortcuts**: Upload field should allow URLs to be dropped.
 - [ ] **Shortcuts**: Add ability to create folders that can hold other shortcuts.
 - [ ] **Shortcuts**: Create settings page component to list predetermined shortcuts.
 - [ ] **Shortcuts**: Create components that interface with bookmarks and apps.
